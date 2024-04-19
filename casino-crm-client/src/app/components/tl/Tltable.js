@@ -18,7 +18,7 @@ const Tltable = () => {
             id: 2,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Sohan',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
@@ -28,7 +28,7 @@ const Tltable = () => {
             id: 3,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Raman',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
@@ -38,7 +38,7 @@ const Tltable = () => {
             id: 4,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Lalit',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
@@ -48,7 +48,7 @@ const Tltable = () => {
             id: 5,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Raju',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
@@ -58,7 +58,7 @@ const Tltable = () => {
             id: 6,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Neeraj',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
@@ -68,7 +68,7 @@ const Tltable = () => {
             id: 7,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Suman',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
@@ -78,7 +78,7 @@ const Tltable = () => {
             id: 8,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Radhika',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
@@ -88,7 +88,7 @@ const Tltable = () => {
             id: 9,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Shyam',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
@@ -96,110 +96,110 @@ const Tltable = () => {
         }
         ,
         {
-            id: 9,
+            id: 10,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Rahul',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
             Remarks: 'Dummy'
         },
         {
-            id: 9,
+            id: 11,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Amit',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
             Remarks: 'Dummy'
         },
         {
-            id: 9,
+            id: 12,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Lakshmi',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
             Remarks: 'Dummy'
         },
         {
-            id: 9,
+            id: 13,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Mangal',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
             Remarks: 'Dummy'
         },
         {
-            id: 9,
+            id: 14,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Raj',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
             Remarks: 'Dummy'
         },
         {
-            id: 9,
+            id: 15,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Pawan',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
             Remarks: 'Dummy'
         },
         {
-            id: 9,
+            id: 16,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Komal',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
             Remarks: 'Dummy'
         },
         {
-            id: 9,
+            id: 17,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Rani',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
             Remarks: 'Dummy'
         },
         {
-            id: 9,
+            id: 18,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Roshan',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
             Remarks: 'Dummy'
         },
         {
-            id: 9,
+            id: 19,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Boby',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
             Remarks: 'Dummy'
         },
         {
-            id: 9,
+            id: 20,
             Time_Stamp: '2025-04-12, 16:13:43',
             Date: '12/04/24',
-            Customer_Name: 'Rohan',
+            Customer_Name: 'Sapna',
             Game_Name: "Casino",
             Amount: 4000,
             Acount_Name: 'Dummy Name',
@@ -214,10 +214,10 @@ const Tltable = () => {
                 <table className='w-full'>
                     <thead >
                         <tr className='text-center text-[.9rem] border-b-[2px] border-[#D84F67]'>
-                            <td className='border-r-[2px]  border-[#D84F67] mb-2 py-1'>Time Stamp</td>
+                            <td className='border-r-[2px] border-[#D84F67] mb-2 py-1'>Time Stamp</td>
                             <td className='border-r-[2px] border-[#D84F67] py-1'>Date</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Customer name</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Game name</td>
+                            <td className='border-r-[2px] border-[#D84F67] py-1'>Customer Name</td>
+                            <td className='border-r-[2px] border-[#D84F67] py-1'>Game Name</td>
                             <td className='border-r-[2px] border-[#D84F67] py-1'>Amount</td>
                             <td className='border-r-[2px] border-[#D84F67] py-1'>Account Name</td>
                             <td className='py-1'>Remarks</td>

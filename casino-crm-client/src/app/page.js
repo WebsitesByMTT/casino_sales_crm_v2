@@ -5,7 +5,6 @@ import { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
 
@@ -27,8 +26,8 @@ export default function Login() {
       }else if(!logindata.password){
          toast('Enter Password',{type:'error'})
       }else{
-         toast('Login Success',{type:'success'})
          Router.push('/dashboard')
+         toast('Login Success',{type:'success'})
          console.log(logindata)
       }
    }
@@ -60,18 +59,6 @@ export default function Login() {
                </div>
             </div>
          </div>
-         <ToastContainer
-            position="top-center" // Position of the toast container
-            autoClose={2000} // Time in milliseconds to close the toast automatically
-            hideProgressBar={false} // Whether to hide the progress bar
-            newestOnTop={true} // Whether new toasts should appear on top
-            closeOnClick={true} // Whether to close the toast when clicked
-            rtl={false} // Right-to-left layout
-            pauseOnFocusLoss={true} // Whether to pause toast when the window loses focus
-            draggable={true} // Whether to allow dragging to dismiss
-            pauseOnHover={true} // Whether to pause toast when hovering
-            toastStyle={{ backgroundColor: '#454547', color: 'white' }}
-         />
       </>
    );
 }
