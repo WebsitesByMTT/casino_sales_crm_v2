@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -8,9 +9,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
 
+   //Use Router 
+   const Router=useRouter()
+
    //Username & Password State
    const [logindata, setLoginData] = useState({ username: "", password: "" })
-   console.log(logindata)
    //get Input Typed Data
    const handelChange = (e) => {
       const { name, value } = e.target
@@ -19,7 +22,15 @@ export default function Login() {
 
    //Handel Login Api is Here
    const handelLogin = () => {
-      
+      if(!logindata.username){
+         toast('Enter Username',{type:'error'})
+      }else if(!logindata.password){
+         toast('Enter Password',{type:'error'})
+      }else{
+         toast('Login Success',{type:'success'})
+         Router.push('/dashboard')
+         console.log(logindata)
+      }
    }
 
    return (
