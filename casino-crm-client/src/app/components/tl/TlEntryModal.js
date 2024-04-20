@@ -103,7 +103,6 @@ const TlEntryModal = ({ closetlpopup }) => {
                 </div>
             </Dialog>
         </Transition>
-
     )
 }
 

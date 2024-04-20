@@ -1,4 +1,6 @@
 import React from 'react'
+import { FaEdit } from 'react-icons/fa'
+import { MdDelete } from 'react-icons/md'
 
 const Tltable = () => {
 
@@ -208,7 +210,7 @@ const Tltable = () => {
     ]
 
     return (
-        <div className='text-white w-[85%] mx-auto'>
+        <div className='text-white pt-10  md:w-[85%] mx-auto'>
             <div className='h-[80vh] overflow-y-scroll'>
                 {/* Table */}
                 <table className='w-full'>
@@ -220,7 +222,8 @@ const Tltable = () => {
                             <td className='border-r-[2px] border-[#D84F67] py-1'>Game Name</td>
                             <td className='border-r-[2px] border-[#D84F67] py-1'>Amount</td>
                             <td className='border-r-[2px] border-[#D84F67] py-1'>Account Name</td>
-                            <td className='py-1'>Remarks</td>
+                            <td className='py-1 border-r-[2px] border-[#D84F67]'>Remarks</td>
+                            <td className='py-1'>Action</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -234,6 +237,12 @@ const Tltable = () => {
                                     <th className='py-5  font-normal'>{item?.Amount}</th>
                                     <th className='py-5  font-normal'>{item?.Acount_Name}</th>
                                     <th className='py-5  font-normal'>{item?.Remarks}</th>
+                                    <th className='py-5 font-normal'>
+                                        <div className='flex items-center justify-center space-x-2'>
+                                            <FaEdit size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                            <MdDelete size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
+                                        </div>
+                                    </th>
                                 </tr>
                             ))
                         }

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 export default function Login() {
 
@@ -12,7 +12,7 @@ export default function Login() {
    const Router=useRouter()
 
    //Username & Password State
-   const [logindata, setLoginData] = useState({ username: "", password: "" })
+   const [logindata, setLoginData]=useState({ username: "", password: "" })
    //get Input Typed Data
    const handelChange = (e) => {
       const { name, value } = e.target
@@ -35,20 +35,20 @@ export default function Login() {
    return (
       <>
          <div className="h-screen relative w-full gradient">
-            <div className="absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%]">
+            <div className="absolute top-[50%] md:w-[60%] w-[95%] left-[50%] translate-y-[-50%] translate-x-[-50%]">
                {/* Logo */}
                <div className="pb-3.5">
                   <Image src="/assets/images/Login.png" alt="login" width={112} height={30} className="w-[6.5rem] mx-auto" />
                </div>
                {/* Login Card */}
-               <div className="bg-[#5D5D5E] md:w-[350px]  pt-28 pb-24 px-14 rounded-lg">
+               <div className="bg-[#5D5D5E] mx-auto  lg:w-[350px]  pt-28 pb-24 px-14 rounded-lg">
                   <div className="space-y-4 pb-12">
                      <div className="flex items-center px-3 bg-[#D9D9D9] rounded-2xl">
-                        <input type="text" value={logindata.username} onChange={(e) => handelChange(e)} placeholder="User Name" name="username" className="outline-none bg-transparent placeholder:text-[.9rem] placeholder:text-[#5D5D5E] w-full px-2 py-1 rounded-md" />
+                        <input onKeyDown={(e)=>e.key==="Enter"&&handelLogin()} type="text" value={logindata.username} onChange={(e) => handelChange(e)} placeholder="User Name" name="username" className="outline-none bg-transparent placeholder:text-[.9rem] placeholder:text-[#5D5D5E] w-full px-2 py-1 rounded-md" />
                         <FaRegUser size={18} className="text-[#5D5D5E]" />
                      </div>
                      <div className="flex items-center px-3 bg-[#D9D9D9] rounded-2xl">
-                        <input type="password" placeholder="Password" name="password" value={logindata.password} onChange={(e) => handelChange(e)} className="outline-none bg-transparent placeholder:text-[.9rem] placeholder:text-[#5D5D5E] w-full px-2 py-1 rounded-md" />
+                        <input onKeyDown={(e)=>e.key==="Enter"&&handelLogin()} type="password" placeholder="Password" name="password" value={logindata.password} onChange={(e) => handelChange(e)} className="outline-none bg-transparent placeholder:text-[.9rem] placeholder:text-[#5D5D5E] w-full px-2 py-1 rounded-md" />
                         <RiLockPasswordLine size={18} className="text-[#5D5D5E]" />
                      </div>
                   </div>
