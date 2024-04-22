@@ -88,16 +88,25 @@ const Balance_Sheet = () => {
             Incentive: "Casino",
             Total_Salary: 4000,
             Review: 'Dummy Name',
+        },
+        {
+            id: 11,
+            Employ_Name: '2025-04-12, 16:13:43',
+            Designation: '12/04/24',
+            Salary: 'Rohan',
+            Incentive: "Casino",
+            Total_Salary: 4000,
+            Review: 'Dummy Name',
         }
     ]
 
     return (
-        <div className='text-white pt-10 w-[85%] mx-auto'>
-            <div className='h-[80vh] overflow-y-scroll'>
+        <div className='text-white pt-10 w-[90%] mx-auto'>
+            <div className='h-[80vh]'>
                 {/* Table */}
                 <table className='w-full'>
                     <thead >
-                        <tr className='text-center text-[.9rem] border-b-[2px] border-[#D84F67]'>
+                        <tr className='text-center text-[100%] border-b-[2px] border-[#D84F67]'>
                             <td className='border-r-[2px] border-[#D84F67] mb-2 py-1'>Employ name</td>
                             <td className='border-r-[2px] border-[#D84F67] py-1'>Designation</td>
                             <td className='border-r-[2px] border-[#D84F67] py-1'>Salary</td>
@@ -110,7 +119,7 @@ const Balance_Sheet = () => {
                     <tbody>
                         {
                             data?.map((item, ind) => (
-                                <tr key={ind} className='text-[#8B8B8C] text-center text-[.9rem]'>
+                                <tr key={ind} className='text-[#8B8B8C] text-center text-[100%]'>
                                     <th className='py-5  font-normal'>{item?.Employ_Name}</th>
                                     <th className='py-5  font-normal'>{item?.Designation}</th>
                                     <th className='py-5  font-normal'>{item?.Salary}</th>

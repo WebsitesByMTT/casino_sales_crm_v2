@@ -53,16 +53,56 @@ const Account_Records = () => {
             Status: 'Active',
             FB_Link: "Casino",
             AgentName:4000,
+        },
+        {
+            id: 7,
+            UserName:'Raj',
+            Password: 'Raj@123#',
+            Status: 'Active',
+            FB_Link: "Casino",
+            AgentName:4000,
+        },
+        {
+            id: 8,
+            UserName:'Raj',
+            Password: 'Raj@123#',
+            Status: 'Active',
+            FB_Link: "Casino",
+            AgentName:4000,
+        },
+        {
+            id:9,
+            UserName:'Raj',
+            Password: 'Raj@123#',
+            Status: 'Active',
+            FB_Link: "Casino",
+            AgentName:4000,
+        },
+        {
+            id:10,
+            UserName:'Raj',
+            Password: 'Raj@123#',
+            Status: 'Active',
+            FB_Link: "Casino",
+            AgentName:4000,
+        },
+        {
+            id:11,
+            UserName:'Raj',
+            Password: 'Raj@123#',
+            Status: 'Active',
+            FB_Link: "Casino",
+            AgentName:4000,
         }
     ]
 
     return (
         <div className='text-white pt-10 w-[85%] mx-auto'>
-            <div className='h-[80vh] overflow-y-scroll'>
+            <div className='h-[80vh]'>
                 {/* Table */}
                 <table className='w-full'>
                     <thead >
-                        <tr className='text-center text-[.9rem] border-b-[2px] border-[#D84F67]'>
+                        <tr className='text-center text-[100%] border-b-[2px] border-[#D84F67]'>
                             <td className='border-r-[2px] border-[#D84F67] mb-2 py-1'>User Name</td>
                             <td className='border-r-[2px] border-[#D84F67] py-1'>Password</td>
                             <td className='border-r-[2px] border-[#D84F67] py-1'>Status</td>
@@ -74,7 +114,7 @@ const Account_Records = () => {
                     <tbody>
                         {
                             data?.map((item, ind) => (
-                                <tr key={ind} className='text-[#8B8B8C] text-center text-[.9rem]'>
+                                <tr key={ind} className='text-[#8B8B8C] text-center text-[100%]'>
                                     <th className='py-5  font-normal'>{item?.UserName}</th>
                                     <th className='py-5  font-normal'>{item?.Password}</th>
                                     <th className='py-5  font-normal'>{item?.Status}</th>

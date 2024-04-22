@@ -1,1 +1,1 @@
-export const BASE_URL=process.env.DB_BASEURL
+export const BASE_URL="http://casinogamescrmv2-env.eba-8mdcbsmq.ap-south-1.elasticbeanstalk.com"
