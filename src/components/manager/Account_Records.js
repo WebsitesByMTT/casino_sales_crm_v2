@@ -61,38 +61,6 @@ const Account_Records = () => {
             Status: 'Active',
             FB_Link: "Casino",
             AgentName:4000,
-        },
-        {
-            id: 8,
-            UserName:'Raj',
-            Password: 'Raj@123#',
-            Status: 'Active',
-            FB_Link: "Casino",
-            AgentName:4000,
-        },
-        {
-            id:9,
-            UserName:'Raj',
-            Password: 'Raj@123#',
-            Status: 'Active',
-            FB_Link: "Casino",
-            AgentName:4000,
-        },
-        {
-            id:10,
-            UserName:'Raj',
-            Password: 'Raj@123#',
-            Status: 'Active',
-            FB_Link: "Casino",
-            AgentName:4000,
-        },
-        {
-            id:11,
-            UserName:'Raj',
-            Password: 'Raj@123#',
-            Status: 'Active',
-            FB_Link: "Casino",
-            AgentName:4000,
         }
     ]
 

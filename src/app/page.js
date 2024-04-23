@@ -7,9 +7,9 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from 'react-toastify';
 import { BASE_URL } from "./apiconfig/Baseurl";
 import { API_PATH } from "./apiconfig/Apipath";
-import { setToken } from "./session/Cookies";
 import { useRouter } from "next/navigation";
 import Loader from "./utility/Loader";
+import { setToken } from "./utility/session/Cookies";
 
 export default function Login() {
 

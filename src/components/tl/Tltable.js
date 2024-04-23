@@ -1,255 +1,110 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
+import { BASE_URL } from '../../app/apiconfig/Baseurl'
+import { API_PATH } from '../../app/apiconfig/Apipath'
+import Loader from '../../app/utility/Loader'
+import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { TlTableId, UpdateTable } from '../../app/redux/ReduxSlice'
+import { getUserDetails } from '../../app/utility/session/Cookies'
+import TlEntryModal from './TlEntryModal'
 
 const Tltable = () => {
 
-    //TL Dummy Table Data
-    const data = [
-        {
-            id: 1,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Rohan',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 2,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Sohan',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 3,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Raman',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 4,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Lalit',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 5,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Raju',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 6,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Neeraj',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 7,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Suman',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 8,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Radhika',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 9,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Shyam',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
+    const [userdetail, setUserDetail] = useState({})
+    async function getUser() {
+        const userDetails = await getUserDetails();
+        setUserDetail(userDetails)
+    }
+    useEffect(() => {
+        getUser()
+    }, [])
+    //Get UserDetails 
+
+    const dispatch = useDispatch() //Dispatch From Redux
+
+    const state = useSelector((state) => state.globlestate.TableState) //Geting Updated State From Redux
+    const [data, setData] = useState([]) //TL Table Data State
+    const [load, setLoad] = useState(false) //Api Pre Loader State
+    //TL Get Table Data Api is Here
+    const handelGetTlData = async () => {
+        try {
+            setLoad(true)
+            const response = await axios.get(BASE_URL + API_PATH.apiGetTlTabel)
+            if (response?.data?.status === true) {
+                setData(response?.data?.customers)
+                dispatch(UpdateTable(false))
+            } else {
+                setData([])
+                toast('Something went wrong', { type: 'error' })
+            }
+            setLoad(false)
+        } catch (error) {
+            setLoad(false)
         }
-        ,
-        {
-            id: 10,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Rahul',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 11,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Amit',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 12,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Lakshmi',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 13,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Mangal',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 14,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Raj',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 15,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Pawan',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 16,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Komal',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 17,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Rani',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 18,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Roshan',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 19,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Boby',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        },
-        {
-            id: 20,
-            Time_Stamp: '2025-04-12, 16:13:43',
-            Date: '12/04/24',
-            Customer_Name: 'Sapna',
-            Game_Name: "Casino",
-            Amount: 4000,
-            Acount_Name: 'Dummy Name',
-            Remarks: 'Dummy'
-        }
-    ]
+    }
+
+    useEffect(() => {
+        handelGetTlData()
+    }, [state])
+
+    //Tl Table Edit Id Dispatch
+    const [edittldata,setEditTlData]=useState()
+    const handelTlTableEdit=(data)=>{
+        setEditTlData(data)
+    }
+
+    const closeedittl=(state)=>{
+        setEditTlData(state)
+    }
 
     return (
-        <div className='text-white pt-10  md:w-[85%] mx-auto'>
-            <div className='h-[80vh] overflow-y-scroll'>
-                {/* Table */}
-                <table className='w-full'>
-                    <thead >
-                        <tr className='text-center text-[.9rem] border-b-[2px] border-[#D84F67]'>
-                            <td className='border-r-[2px] border-[#D84F67] mb-2 py-1'>Time Stamp</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Date</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Customer Name</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Game Name</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Amount</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Account Name</td>
-                            <td className='py-1 border-r-[2px] border-[#D84F67]'>Remarks</td>
-                            <td className='py-1'>Action</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            data?.map((item, ind) => (
-                                <tr key={ind} className='text-[#8B8B8C] text-[.9rem]'>
-                                    <th className='py-5  font-normal'>{item?.Time_Stamp}</th>
-                                    <th className='py-5  font-normal'>{item?.Date}</th>
-                                    <th className='py-5  font-normal'>{item?.Customer_Name}</th>
-                                    <th className='py-5  font-normal'>{item?.Game_Name}</th>
-                                    <th className='py-5  font-normal'>{item?.Amount}</th>
-                                    <th className='py-5  font-normal'>{item?.Acount_Name}</th>
-                                    <th className='py-5  font-normal'>{item?.Remarks}</th>
-                                    <th className='py-5 font-normal'>
-                                        <div className='flex items-center justify-center space-x-2'>
-                                            <FaEdit size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
-                                            <MdDelete size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
-                                        </div>
-                                    </th>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </div >
-        </div >
+        <>
+            <div className='text-white pt-10 md:w-[96%] lg:w-[90%] xl:w-[85%] mx-auto'>
+                <div className='h-[80vh]'>
+                    {/* Table */}
+                    <table className='w-full'>
+                        <thead >
+                            <tr className='text-center text-[100%] border-b-[2px] border-[#D84F67]'>
+                                <th className='border-r-[2px] border-[#D84F67] mb-2 py-1'>Time Stamp</th>
+                                <th className='border-r-[2px] border-[#D84F67] py-1'>Date</th>
+                                <th className='border-r-[2px] border-[#D84F67] py-1'>Customer Name</th>
+                                <th className='border-r-[2px] border-[#D84F67] py-1'>Game Name</th>
+                                <th className='border-r-[2px] border-[#D84F67] py-1'>Amount</th>
+                                <th className='border-r-[2px] border-[#D84F67] py-1'>Account Name</th>
+                                <th className='py-1 border-r-[2px] border-[#D84F67]'>Remarks</th>
+                                <th className='py-1'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                data?.map((item, ind) => (
+                                    <tr key={ind} className='text-[#8B8B8C] text-[100%] text-center'>
+                                        <td className='py-3  font-normal'>{item?.createdAt}</td>
+                                        <td className='py-3  font-normal'>{new Date(item?.date).toLocaleString('en-US', { day: '2-digit', month: 'short', year: '2-digit' })}</td>
+                                        <td className='py-3  font-normal'>{item?.customerName}</td>
+                                        <td className='py-3  font-normal'>{item?.gameName}</td>
+                                        <td className='py-3  font-normal'>{item?.amount}</td>
+                                        <td className='py-3  font-normal'>{item?.accountName}</td>
+                                        <td className='py-3  font-normal'>{item?.remarks}</td>
+                                        <td className='py-3 font-normal'>
+                                            <div className='flex items-center justify-center space-x-2'>
+                                                <FaEdit onClick={()=>handelTlTableEdit(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                                {userdetail?.designation==="TL"?null:<MdDelete size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div >
+            </div>
+            <Loader show={load} />
+            {edittldata&&<TlEntryModal closetlpopup={closeedittl} tlEditdata={edittldata}/>}
+        </>
     )
 }
 

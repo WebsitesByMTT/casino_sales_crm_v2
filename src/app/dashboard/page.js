@@ -10,11 +10,12 @@ import Account_Records from '../../components/manager/Account_Records'
 import Account_Records_Modal from '../../components/manager/Account_Records_Modal'
 import Fresh_Messages from '../../components/agent/Fresh_Messages'
 import { RiLogoutCircleLine } from "react-icons/ri";
-import { deletToken, getUserDetails } from '../session/Cookies'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import Fresh_Messages_Modal from '../../components/agent/Fresh_Messages_Modal'
 import Free_To_Play from '../../components/agent/Free_To_Play'
+import Free_To_Play_Modal from '../../components/agent/Free_To_Play_Modal'
+import { deletToken, getUserDetails } from '../utility/session/Cookies'
 
 const page = () => {
  //Get UserDetails 
@@ -22,7 +23,7 @@ const [userdetail,setUserDetail]=useState({})
   async function getUser() {
     const userDetails = await getUserDetails();
     setUserDetail(userDetails)
-    setTabs(userDetails?.designation)
+    setTabs(userDetails?.designation==="BB"?"Manager":userDetails?.designation)
 }
 useEffect(()=>{
   getUser()
@@ -79,9 +80,13 @@ useEffect(()=>{
   //Handel Agent Tab
   const [agenttab, setAgenttab] = useState('Fresh_Message')
   const [freshmessage,setFreshMessage]=useState(false)
-const closeFreshMessage=(state)=>{
-   setFreshMessage(state)
-}
+  const closeFreshMessage=(state)=>{
+     setFreshMessage(state)
+  }
+const [freemodal,setFreeModal]=useState(false)
+  const closeFreeModal=(state)=>{
+    setFreeModal(state)
+  }
   //Handel Agent Tab
 
   return (
@@ -120,9 +125,11 @@ const closeFreshMessage=(state)=>{
                 {/* Agent Tabs */}
               </div>
               {/* TL New Entry Button */}
+              {userdetail?.designation==="Manager"?null:<>
               {tabs === "TL" ? <div className='mt-auto'>
                 <button onClick={() => setTlpopup(true)} className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
               </div> : ''}
+              </>}
               {/* TL New Entry Button */}
               {/* Manager New Entry Button */}
               {tabs === "Manager" && managerTab === "Balance_Sheet" ? <div className='mt-auto'>
@@ -138,28 +145,31 @@ const closeFreshMessage=(state)=>{
               </div> : ''}
               {/* Manager New Entry Button */}
               {/* Agent New Entry Button */}
+              {userdetail?.designation==="TL"||userdetail?.designation==="Manager"?null:<>
               {tabs === "Agent" && agenttab === "Fresh_Message" ? <div className='mt-auto'>
                 <button onClick={()=>setFreshMessage(true)} className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
               </div> : ''}
               {tabs === "Agent" && agenttab === "Free_To_Play" ? <div className='mt-auto'>
-                <button className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
+                <button onClick={()=>setFreeModal(true)} className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
               </div> : ''}
               {tabs === "Agent" && agenttab === "Free_Deposit_Entry" ? <div className='mt-auto'>
-                <button className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
+                <button onClick={()=>setFreeModal(true)} className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
               </div> : ''}
+              </>}
               {/* Agent New Entry Button */}
             </div>
           </div>
+          {/* Left */}
           {/* Right */}
           <div className={`col-span-12 ${userdetail?.designation==="BB"?'pt-0':'pt-8'}  md:col-span-9`}>
             {/* Tl Manager Agent Tabs */}
-            {userdetail?.designation==="BB"?<div className='flex  py-2 justify-center'>
+            {userdetail?.designation==="Agent"?null:<div className='flex  py-2 justify-center'>
               <div className='text-white flex items-center w-[80%] md:w-[40%] justify-between'>
                 <div onClick={() => setTabs("TL")} className={`bg-[#454547] ${tabs === "TL" ? 'bg-gray-500' : ''} cursor-pointer hover:scale-95 border border-[#8C8C8C] transition-all px-5 py-2 rounded-lg`}>TL</div>
-                <div onClick={() => setTabs("Manager")} className={`bg-[#454547] ${tabs === "Manager" ? 'bg-gray-500' : ''} cursor-pointer hover:scale-95 border border-[#8C8C8C] transition-all px-5 py-2 rounded-lg`}>Manager</div>
+                {userdetail?.designation==="TL"?null:<div onClick={() => setTabs("Manager")} className={`bg-[#454547] ${tabs === "Manager" ? 'bg-gray-500' : ''} cursor-pointer hover:scale-95 border border-[#8C8C8C] transition-all px-5 py-2 rounded-lg`}>Manager</div>}
                 <div onClick={() => setTabs("Agent")} className={`bg-[#454547] ${tabs === "Agent" ? 'bg-gray-500' : ''} cursor-pointer hover:scale-95 border border-[#8C8C8C] transition-all px-5 py-2 rounded-lg`}>Agent</div>
               </div>
-            </div>:null}
+            </div>}
             {/* TL Table */}
             {tabs === "TL" ? <Tltable /> : null}
             {/* TL Table */}
@@ -171,9 +181,11 @@ const closeFreshMessage=(state)=>{
             {/* Agent Fresh_Messages Free_To_Play First_Deposit_Entry Table */}
             {tabs === "Agent" && agenttab === "Fresh_Message" ? <Fresh_Messages /> : null}
             {tabs === "Agent" && agenttab === "Free_To_Play" ? <Free_To_Play /> : null}
+            {tabs === "Agent" && agenttab === "Free_Deposit_Entry" ? <Free_To_Play /> : null}
             {/* Agent Fresh_Messages Free_To_Play First_Deposit_Entry Table */}
 
           </div>
+          {/* Right */}
         </div>
       </div>
       {/* TL Entry Popup */}
@@ -186,6 +198,7 @@ const closeFreshMessage=(state)=>{
       {/* Manager Entry Popup */}
       {/* Agent Entry Popup */}
       {freshmessage&&<Fresh_Messages_Modal close_Fresh_Message={closeFreshMessage}/>}
+      {freemodal&&<Free_To_Play_Modal closeThisModal={closeFreeModal}/>}
       {/* Agent Entry Popup */}
     </>
   )

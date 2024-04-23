@@ -53,34 +53,6 @@ const Coin_Sheet = () => {
             Spent: '380',
             Remaining: '300',
             Incentive: "4500",
-        },
-        {
-            id: 8,
-            Initial_Coins:'680',
-            Spent: '380',
-            Remaining: '300',
-            Incentive: "4500",
-        },
-        {
-            id: 9,
-            Initial_Coins:'680',
-            Spent: '380',
-            Remaining: '300',
-            Incentive: "4500",
-        },
-        {
-            id: 10,
-            Initial_Coins:'680',
-            Spent: '380',
-            Remaining: '300',
-            Incentive: "4500",
-        },
-        {
-            id: 11,
-            Initial_Coins:'680',
-            Spent: '380',
-            Remaining: '300',
-            Incentive: "4500",
         }
     ]
     return (

@@ -64,39 +64,6 @@ const Balance_Sheet = () => {
             Incentive: "Casino",
             Total_Salary: 4000,
             Review: 'Dummy Name',
-        }, {
-            id: 8,
-            Employ_Name: '2025-04-12, 16:13:43',
-            Designation: '12/04/24',
-            Salary: 'Rohan',
-            Incentive: "Casino",
-            Total_Salary: 4000,
-            Review: 'Dummy Name',
-        }, {
-            id: 9,
-            Employ_Name: '2025-04-12, 16:13:43',
-            Designation: '12/04/24',
-            Salary: 'Rohan',
-            Incentive: "Casino",
-            Total_Salary: 4000,
-            Review: 'Dummy Name',
-        }, {
-            id: 10,
-            Employ_Name: '2025-04-12, 16:13:43',
-            Designation: '12/04/24',
-            Salary: 'Rohan',
-            Incentive: "Casino",
-            Total_Salary: 4000,
-            Review: 'Dummy Name',
-        },
-        {
-            id: 11,
-            Employ_Name: '2025-04-12, 16:13:43',
-            Designation: '12/04/24',
-            Salary: 'Rohan',
-            Incentive: "Casino",
-            Total_Salary: 4000,
-            Review: 'Dummy Name',
         }
     ]
 

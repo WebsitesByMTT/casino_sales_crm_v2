@@ -3,15 +3,15 @@ import { createSlice } from '@reduxjs/toolkit'
 export const reduxSlice = createSlice({
     name: 'globlestate',
     initialState: {
-        name:"Kajal"
+        TableState:false
     },
     reducers: {
-        UpdateName: (state, action) => {
-            state.name = action.payload
+        UpdateTable: (state, action) => {
+            state.TableState = action.payload
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { UpdateName } = reduxSlice.reducer
+export const {UpdateTable} = reduxSlice.actions
 export default reduxSlice.reducer
