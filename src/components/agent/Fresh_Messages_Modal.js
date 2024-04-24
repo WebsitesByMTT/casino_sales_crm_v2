@@ -8,8 +8,9 @@ import { toast } from 'react-toastify'
 import Loader from '../../app/utility/Loader'
 import { useDispatch } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
+import { BearerToken } from '../../app/utility/session/Cookies'
 
-const Fresh_Messages_Modal = ({ close_Fresh_Message }) => {
+const Fresh_Messages_Modal = ({ close_Fresh_Message,editfreshmessage}) => {
 
     const dispatch=useDispatch() //Use Dispatch
 
@@ -20,14 +21,14 @@ const Fresh_Messages_Modal = ({ close_Fresh_Message }) => {
 
     //Get Input Typed Value
     const [data, setData] = useState({
-        agentName: '',
-        systemNumber: '',
-        accountName: '',
-        playerId: '',
-        remarks: ''
+        agentName:editfreshmessage?.agentName,
+        systemNumber:editfreshmessage?.systemNumber,
+        accountName:editfreshmessage?.accountName,
+        playerId:editfreshmessage?.playerId,
+        remarks:editfreshmessage?.remarks
     })
 
-    //OnChange Function
+    //OnChange Function 
     const handelOnChange = (e) => {
         const { name, value } = e.target
         setData({ ...data, [name]: value })
@@ -49,7 +50,7 @@ const Fresh_Messages_Modal = ({ close_Fresh_Message }) => {
         } else {
             try {
                 setLoad(true)
-                const response = await axios.post(BASE_URL + API_PATH.apiAddFreshMessage, data)
+                const response = await axios.post(BASE_URL + API_PATH.apiAddFreshMessage, data,BearerToken)
                 if (response?.data?.status === true) {
                     toast(response.data.message, { type: 'success' })
                     closeModal()
@@ -60,8 +61,26 @@ const Fresh_Messages_Modal = ({ close_Fresh_Message }) => {
                 setLoad(false)
             }
         }
-
     }
+
+     //Edit Fresh Message Data Api is Here
+     const EditFreshmessageData=async()=>{
+        try {
+            const response=await axios.put(BASE_URL+API_PATH.apiEditFreshMessage+editfreshmessage.agentName,data,BearerToken)
+            if(response?.data?.status===true){
+               toast(response.data.message,{type:'success'})
+               closeModal()
+               dispatch(UpdateTable(true))
+            }else{
+                toast("Something went wrong",{type:'error'})
+                closeModal()
+            }
+        } catch (error) {
+            
+        }
+    }
+
+
 
     return (
         <>
@@ -74,7 +93,6 @@ const Fresh_Messages_Modal = ({ close_Fresh_Message }) => {
                         enterTo="opacity-100"
                         leave="ease-in duration-200"
                         leaveFrom="opacity-100"
-
                         leaveTo="opacity-0"
                     >
                         <div className="fixed inset-0 bg-black/25" />
@@ -116,7 +134,7 @@ const Fresh_Messages_Modal = ({ close_Fresh_Message }) => {
                                     </div>
                                     {/* Add */}
                                     <div className='pt-5 flex justify-center'>
-                                        <button onClick={handelAddFreshMessage} className='gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'>Add</button>
+                                        <button onClick={editfreshmessage?EditFreshmessageData:handelAddFreshMessage} className='gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'>Add</button>
                                     </div>
                                     {/* Close Icon */}
                                     <IoMdClose onClick={closeModal} size={25} className='absolute top-1 cursor-pointer hover:scale-105 transition-all z-10 gradient-red rounded-full right-3' />

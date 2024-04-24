@@ -16,33 +16,36 @@ import Fresh_Messages_Modal from '../../components/agent/Fresh_Messages_Modal'
 import Free_To_Play from '../../components/agent/Free_To_Play'
 import Free_To_Play_Modal from '../../components/agent/Free_To_Play_Modal'
 import { deletToken, getUserDetails } from '../utility/session/Cookies'
+import Button from '../../components/button/Button'
 
 const page = () => {
- //Get UserDetails 
-const [userdetail,setUserDetail]=useState({})
+  //Get UserDetails 
+  const [userdetail, setUserDetail] = useState({})
   async function getUser() {
     const userDetails = await getUserDetails();
-    setUserDetail(userDetails)
-    setTabs(userDetails?.designation==="BB"?"Manager":userDetails?.designation)
-}
-useEffect(()=>{
-  getUser()
-},[])
- //Get UserDetails 
+    if (userDetails) {
+      setUserDetail(userDetails)
+      setTabs(userDetails?.designation !== "BB" ? userDetails?.designation : "Manager")
+    }
+  }
+  useEffect(() => {
+    getUser()
+  }, [])
+  //Get UserDetails 
 
 
   //Use Router
-  const Router=useRouter()
+  const Router = useRouter()
 
   //Logout dispatch
-  const handelLogOut=()=>{
+  const handelLogOut = () => {
     deletToken()
-    toast('Logout Successful',{type:'success'})
-    Router.push('/')    
+    toast('Logout Successful', { type: 'success' })
+    Router.push('/')
   }
 
   //Tl Manager Agent Tab State
-  const [tabs,setTabs] = useState()
+  const [tabs, setTabs] = useState()
   //Tl Manager Agent Tab State
 
   //Open TL New Entry Popup
@@ -79,12 +82,12 @@ useEffect(()=>{
 
   //Handel Agent Tab
   const [agenttab, setAgenttab] = useState('Fresh_Message')
-  const [freshmessage,setFreshMessage]=useState(false)
-  const closeFreshMessage=(state)=>{
-     setFreshMessage(state)
+  const [freshmessage, setFreshMessage] = useState(false)
+  const closeFreshMessage = (state) => {
+    setFreshMessage(state)
   }
-const [freemodal,setFreeModal]=useState(false)
-  const closeFreeModal=(state)=>{
+  const [freemodal, setFreeModal] = useState(false)
+  const closeFreeModal = (state) => {
     setFreeModal(state)
   }
   //Handel Agent Tab
@@ -99,8 +102,8 @@ const [freemodal,setFreeModal]=useState(false)
               <div>
                 {/* Logout Button */}
                 <div onClick={handelLogOut} className='text-[#D14F4F] cursor-pointer hover:scale-95 transition-all inline-block px-3 space-x-3 text-[100%] rounded-2xl py-2 mb-6 bg-[#2A2A2B]'>
-                   <RiLogoutCircleLine size={18} className='inline-block'/>
-                   <button className='inline-block'>Logout</button>
+                  <RiLogoutCircleLine size={18} className='inline-block' />
+                  <button className='inline-block'>Logout</button>
                 </div>
                 <div className='bg-[#2A2A2B] border border-[#8B8B8C] space-x-2 md:space-x-4 flex items-center py-2 px-4 rounded-lg'>
                   <div className='h-[40px] w-[40px] bg-[#848484] rounded-full'></div>
@@ -111,24 +114,24 @@ const [freemodal,setFreeModal]=useState(false)
                 </div>
                 {/* Manager Tabs */}
                 {tabs === "Manager" && <div className='text-white  pt-10 space-y-3'>
-                  <div onClick={() => setManagerTab('Balance_Sheet')} className={`bg-[#454547] ${managerTab === "Balance_Sheet" ? 'bg-gray-500' : ''}  px-2 py-2 cursor-pointer hover:scale-90 transition-all border-[#8B8B8C] border-[1px] rounded-md`}>Balance Sheet</div>
-                  <div onClick={() => setManagerTab('Coin_Sheet')} className={`bg-[#454547] px-2 ${managerTab === "Coin_Sheet" ? 'bg-gray-500' : ''} py-2 cursor-pointer hover:scale-90 transition-all border-[#8B8B8C] border-[1px] rounded-md`}>Coin Sheet</div>
-                  <div onClick={() => setManagerTab('Account_Records')} className={`bg-[#454547] ${managerTab === "Account_Records" ? 'bg-gray-500' : ''} px-2 py-2 cursor-pointer hover:scale-90 transition-all border-[#8B8B8C] border-[1px] rounded-md`}>Account Records</div>
+                  <Button text={'Balance Sheet'} clickevent={() => setManagerTab('Balance_Sheet')} style={`bg-[#454547] ${managerTab === "Balance_Sheet" ? 'bg-gray-500' : ''} block w-full text-start px-2 py-2 cursor-pointer hover:scale-90 transition-all border-[#8B8B8C] border-[1px] rounded-md`} />
+                  <Button text={'Coin Sheet'} clickevent={() => setManagerTab('Coin_Sheet')} style={`bg-[#454547] ${managerTab === "Coin_Sheet" ? 'bg-gray-500' : ''} block w-full text-start px-2 py-2 cursor-pointer hover:scale-90 transition-all border-[#8B8B8C] border-[1px] rounded-md`} />
+                  <Button text={'Account Records'} clickevent={() => setManagerTab('Account_Records')} style={`bg-[#454547] ${managerTab === "Account_Records" ? 'bg-gray-500' : ''} block w-full text-start px-2 py-2 cursor-pointer hover:scale-90 transition-all border-[#8B8B8C] border-[1px] rounded-md`} />
                 </div>}
                 {/* Manager Tabs */}
                 {/* Agent Tabs */}
                 {tabs === "Agent" && <div className='text-white  pt-10 space-y-3'>
-                  <div onClick={() => setAgenttab('Fresh_Message')} className={`bg-[#454547] ${agenttab === "Fresh_Message" ? 'bg-gray-500' : ''}  px-2 py-2 cursor-pointer hover:scale-90 transition-all border-[#8B8B8C] border-[1px] rounded-md`}>Fresh Messages</div>
-                  <div onClick={() => setAgenttab('Free_To_Play')} className={`bg-[#454547] px-2 ${agenttab === "Free_To_Play" ? 'bg-gray-500' : ''} py-2 cursor-pointer hover:scale-90 transition-all border-[#8B8B8C] border-[1px] rounded-md`}>Free To Play</div>
-                  <div onClick={() => setAgenttab('Free_Deposit_Entry')} className={`bg-[#454547] ${agenttab === "Free_Deposit_Entry" ? 'bg-gray-500' : ''} px-2 py-2 cursor-pointer hover:scale-90 transition-all border-[#8B8B8C] border-[1px] rounded-md`}>First Desposit Entry</div>
+                  <div onClick={() => setAgenttab('Fresh_Message')} className={`bg-[#454547] ${agenttab === "Fresh_Message" ? 'bg-gray-500' : ''} block w-full text-start px-2 py-2 cursor-pointer hover:scale-90 transition-all border-[#8B8B8C] border-[1px] rounded-md`}>Fresh Messages</div>
+                  <div onClick={() => setAgenttab('Free_To_Play')} className={`bg-[#454547] px-2 ${agenttab === "Free_To_Play" ? 'bg-gray-500' : ''} py-2 w-full text-start block cursor-pointer hover:scale-90 transition-all border-[#8B8B8C] border-[1px] rounded-md`}>Free To Play</div>
+                  <div onClick={() => setAgenttab('Free_Deposit_Entry')} className={`bg-[#454547] ${agenttab === "Free_Deposit_Entry" ? 'bg-gray-500' : ''} w-full text-start px-2 block py-2 cursor-pointer hover:scale-90 transition-all border-[#8B8B8C] border-[1px] rounded-md`}>First Desposit Entry</div>
                 </div>}
                 {/* Agent Tabs */}
               </div>
               {/* TL New Entry Button */}
-              {userdetail?.designation==="Manager"?null:<>
-              {tabs === "TL" ? <div className='mt-auto'>
-                <button onClick={() => setTlpopup(true)} className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
-              </div> : ''}
+              {userdetail?.designation === "Manager" ? null : <>
+                {tabs === "TL" ? <div className='mt-auto'>
+                  <button onClick={() => setTlpopup(true)} className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
+                </div> : ''}
               </>}
               {/* TL New Entry Button */}
               {/* Manager New Entry Button */}
@@ -145,28 +148,28 @@ const [freemodal,setFreeModal]=useState(false)
               </div> : ''}
               {/* Manager New Entry Button */}
               {/* Agent New Entry Button */}
-              {userdetail?.designation==="TL"||userdetail?.designation==="Manager"?null:<>
-              {tabs === "Agent" && agenttab === "Fresh_Message" ? <div className='mt-auto'>
-                <button onClick={()=>setFreshMessage(true)} className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
-              </div> : ''}
-              {tabs === "Agent" && agenttab === "Free_To_Play" ? <div className='mt-auto'>
-                <button onClick={()=>setFreeModal(true)} className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
-              </div> : ''}
-              {tabs === "Agent" && agenttab === "Free_Deposit_Entry" ? <div className='mt-auto'>
-                <button onClick={()=>setFreeModal(true)} className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
-              </div> : ''}
+              {userdetail?.designation === "TL" || userdetail?.designation === "Manager" ? null : <>
+                {tabs === "Agent" && agenttab === "Fresh_Message" ? <div className='mt-auto'>
+                  <button onClick={() => setFreshMessage(true)} className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
+                </div> : ''}
+                {tabs === "Agent" && agenttab === "Free_To_Play" ? <div className='mt-auto'>
+                  <button onClick={() => setFreeModal(true)} className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
+                </div> : ''}
+                {tabs === "Agent" && agenttab === "Free_Deposit_Entry" ? <div className='mt-auto'>
+                  <button onClick={() => setFreeModal(true)} className='bg-[#2A2A2B] px-4 py-2 rounded-lg text-[110%] hover:scale-90 transition-all border-[#D84F67] border text-[#D84F67]'>New Entry</button>
+                </div> : ''}
               </>}
               {/* Agent New Entry Button */}
             </div>
           </div>
           {/* Left */}
           {/* Right */}
-          <div className={`col-span-12 ${userdetail?.designation==="BB"?'pt-0':'pt-8'}  md:col-span-9`}>
+          <div className={`col-span-12 ${userdetail?.designation === "BB" ? 'pt-0' : 'pt-8'}  md:col-span-9`}>
             {/* Tl Manager Agent Tabs */}
-            {userdetail?.designation==="Agent"?null:<div className='flex  py-2 justify-center'>
+            {userdetail?.designation === "Agent" ? null : <div className='flex  py-2 justify-center'>
               <div className='text-white flex items-center w-[80%] md:w-[40%] justify-between'>
                 <div onClick={() => setTabs("TL")} className={`bg-[#454547] ${tabs === "TL" ? 'bg-gray-500' : ''} cursor-pointer hover:scale-95 border border-[#8C8C8C] transition-all px-5 py-2 rounded-lg`}>TL</div>
-                {userdetail?.designation==="TL"?null:<div onClick={() => setTabs("Manager")} className={`bg-[#454547] ${tabs === "Manager" ? 'bg-gray-500' : ''} cursor-pointer hover:scale-95 border border-[#8C8C8C] transition-all px-5 py-2 rounded-lg`}>Manager</div>}
+                {userdetail?.designation === "TL" ? null : <div onClick={() => setTabs("Manager")} className={`bg-[#454547] ${tabs === "Manager" ? 'bg-gray-500' : ''} cursor-pointer hover:scale-95 border border-[#8C8C8C] transition-all px-5 py-2 rounded-lg`}>Manager</div>}
                 <div onClick={() => setTabs("Agent")} className={`bg-[#454547] ${tabs === "Agent" ? 'bg-gray-500' : ''} cursor-pointer hover:scale-95 border border-[#8C8C8C] transition-all px-5 py-2 rounded-lg`}>Agent</div>
               </div>
             </div>}
@@ -180,8 +183,8 @@ const [freemodal,setFreeModal]=useState(false)
             {/* Manager Balance_Sheet Coin_Sheet Account_Records Table */}
             {/* Agent Fresh_Messages Free_To_Play First_Deposit_Entry Table */}
             {tabs === "Agent" && agenttab === "Fresh_Message" ? <Fresh_Messages /> : null}
-            {tabs === "Agent" && agenttab === "Free_To_Play" ? <Free_To_Play /> : null}
-            {tabs === "Agent" && agenttab === "Free_Deposit_Entry" ? <Free_To_Play /> : null}
+            {tabs === "Agent" && agenttab === "Free_To_Play" ? <Free_To_Play tabclicked={"freetoplay"} /> : null}
+            {tabs === "Agent" && agenttab === "Free_Deposit_Entry" ? <Free_To_Play tabclicked={"firstdeposit"} /> : null}
             {/* Agent Fresh_Messages Free_To_Play First_Deposit_Entry Table */}
 
           </div>
@@ -197,8 +200,8 @@ const [freemodal,setFreeModal]=useState(false)
       {accountrecord && <Account_Records_Modal closeaccountrecord={closeAccountRecordModal} />}
       {/* Manager Entry Popup */}
       {/* Agent Entry Popup */}
-      {freshmessage&&<Fresh_Messages_Modal close_Fresh_Message={closeFreshMessage}/>}
-      {freemodal&&<Free_To_Play_Modal closeThisModal={closeFreeModal}/>}
+      {freshmessage && <Fresh_Messages_Modal close_Fresh_Message={closeFreshMessage} />}
+      {freemodal && <Free_To_Play_Modal tabclicked={agenttab === "Free_To_Play" ? "freetoplay" : "firstdeposit"} closeThisModal={closeFreeModal} />}
       {/* Agent Entry Popup */}
     </>
   )

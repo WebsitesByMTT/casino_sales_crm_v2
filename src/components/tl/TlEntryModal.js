@@ -8,6 +8,7 @@ import { API_PATH } from '../../app/apiconfig/Apipath';
 import Loader from '../../app/utility/Loader';
 import { useDispatch } from 'react-redux';
 import { UpdateTable } from '../../app/redux/ReduxSlice';
+import { BearerToken } from '../../app/utility/session/Cookies';
 
 const TlEntryModal = ({ closetlpopup,tlEditdata}) => {
     const dispatch = useDispatch() //Dispatch From Redux
@@ -54,7 +55,7 @@ const TlEntryModal = ({ closetlpopup,tlEditdata}) => {
         } else {
             try {
                 setLoad(true)
-                const response = await axios.post(BASE_URL + API_PATH.apiAddTl, data)
+                const response = await axios.post(BASE_URL + API_PATH.apiAddTl, data,BearerToken)
                 if (response?.data?.status === true) {
                     toast(response.data.message, { type: 'success' })
                     closeModal()
@@ -72,7 +73,7 @@ const TlEntryModal = ({ closetlpopup,tlEditdata}) => {
     //Edit Tl Data Api is Here
     const EditTlData=async()=>{
         try {
-            const response=await axios.post(BASE_URL+API_PATH.apiUpdateTl+tlEditdata.customerName,data)
+            const response=await axios.put(BASE_URL+API_PATH.apiUpdateTl+tlEditdata.customerName,data,BearerToken)
             if(response?.data?.status===true){
               toast(response.data.message,{type:'success'})
                closeModal()

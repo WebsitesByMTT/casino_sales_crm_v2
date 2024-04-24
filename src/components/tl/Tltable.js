@@ -7,9 +7,11 @@ import { API_PATH } from '../../app/apiconfig/Apipath'
 import Loader from '../../app/utility/Loader'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
-import { TlTableId, UpdateTable } from '../../app/redux/ReduxSlice'
-import { getUserDetails } from '../../app/utility/session/Cookies'
+import { UpdateTable } from '../../app/redux/ReduxSlice'
+import { BearerToken, getUserDetails } from '../../app/utility/session/Cookies'
 import TlEntryModal from './TlEntryModal'
+import Delete_Modal from '../delete/Delete_Modal'
+
 
 const Tltable = () => {
 
@@ -32,7 +34,7 @@ const Tltable = () => {
     const handelGetTlData = async () => {
         try {
             setLoad(true)
-            const response = await axios.get(BASE_URL + API_PATH.apiGetTlTabel)
+            const response = await axios.get(BASE_URL + API_PATH.apiGetTlTabel,BearerToken);
             if (response?.data?.status === true) {
                 setData(response?.data?.customers)
                 dispatch(UpdateTable(false))
@@ -60,6 +62,11 @@ const Tltable = () => {
         setEditTlData(state)
     }
 
+    //Delete Tl Table Data
+    const [deletedata,setDeleteData]=useState()
+    const closedeletemodal=(state)=>{
+        setDeleteData(state)
+    }
     return (
         <>
             <div className='text-white pt-10 md:w-[96%] lg:w-[90%] xl:w-[85%] mx-auto'>
@@ -92,7 +99,7 @@ const Tltable = () => {
                                         <td className='py-3 font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
                                                 <FaEdit onClick={()=>handelTlTableEdit(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
-                                                {userdetail?.designation==="TL"?null:<MdDelete size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
+                                                {userdetail?.designation==="TL"?null:<MdDelete onClick={()=>setDeleteData(item?.customerName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
                                             </div>
                                         </td>
                                     </tr>
@@ -104,6 +111,7 @@ const Tltable = () => {
             </div>
             <Loader show={load} />
             {edittldata&&<TlEntryModal closetlpopup={closeedittl} tlEditdata={edittldata}/>}
+            {deletedata&&<Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteTl+deletedata}/>}
         </>
     )
 }

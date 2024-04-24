@@ -1,93 +1,86 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
+import { BASE_URL } from '../../app/apiconfig/Baseurl'
+import { API_PATH } from '../../app/apiconfig/Apipath'
+import Loader from '../../app/utility/Loader'
+import { BearerToken } from '../../app/utility/session/Cookies'
+import { useDispatch, useSelector } from 'react-redux'
+import { UpdateTable } from '../../app/redux/ReduxSlice'
+import Coin_Sheet_Modal from './Coin_Sheet_Modal'
 
 const Coin_Sheet = () => {
-    //Balance Sheet Dummy Data
-    const data = [
-        {
-            id: 1,
-            Initial_Coins:'345',
-            Spent: '45',
-            Remaining: '300',
-            Incentive: "5000",
-        },
-        {
-            id: 2,
-            Initial_Coins:'555',
-            Spent: '200',
-            Remaining: '355',
-            Incentive: "6000",
-        },
-        {
-            id: 3,
-            Initial_Coins:'655',
-            Spent: '55',
-            Remaining:'600',
-            Incentive:"5500",
-        },
-        {
-            id: 4,
-            Initial_Coins:'400',
-            Spent: '100',
-            Remaining: '300',
-            Incentive: "8000",
-        },
-        {
-            id: 5,
-            Initial_Coins:'680',
-            Spent: '380',
-            Remaining: '300',
-            Incentive: "4500",
-        },
-        {
-            id: 6,
-            Initial_Coins:'680',
-            Spent: '380',
-            Remaining: '300',
-            Incentive: "4500",
-        },
-        {
-            id: 7,
-            Initial_Coins:'680',
-            Spent: '380',
-            Remaining: '300',
-            Incentive: "4500",
+
+    const dispatch = useDispatch() //useDispatch 
+    const state = useSelector((state) => state.globlestate.TableState) //Geting Updated State From Redux
+
+    //Get Coin Sheet Data Api
+    const [data, setData] = useState([])
+    const [load, setLoad] = useState(false) //Api Loading State
+    const handelGetCoinList = async () => {
+        try {
+            setLoad(true)
+            const response = await axios.get(BASE_URL + API_PATH.apiGetCoinList, BearerToken)
+            if (response?.data?.status === true) {
+                setData(response.data.coinLists)
+                dispatch(UpdateTable(false))
+            } else {
+                setData([])
+            }
+            setLoad(false)
+        } catch (error) {
+            setLoad(false)
         }
-    ]
+    }
+
+    useEffect(() => {
+        handelGetCoinList()
+    }, [state])
+
+    //Edit Coins Data
+    const [editcoin,setEditCoin]=useState()
+    const closecoinsheet=(state)=>{
+        setEditCoin(state)
+    }
+
     return (
-        <div className='text-white pt-10 w-[85%] mx-auto'>
-            <div className='h-[80vh]'>
-                {/* Table */}
-                <table className='w-full'>
-                    <thead >
-                        <tr className='text-center text-[100%] border-b-[2px] border-[#D84F67]'>
-                            <td className='border-r-[2px] border-[#D84F67] mb-2 py-1'>Initial coins</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Spend</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Remaining</td>
-                            <td className='py-1'>Action</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            data?.map((item, ind) => (
-                                <tr key={ind} className='text-[#8B8B8C] text-center text-[100%]'>
-                                    <th className='py-5  font-normal'>{item?.Initial_Coins}</th>
-                                    <th className='py-5  font-normal'>{item?.Spent}</th>
-                                    <th className='py-5  font-normal'>{item?.Remaining}</th>
-                                    <th className='py-5  font-normal'>
-                                        <div className='flex items-center justify-center space-x-2'>
-                                            <FaEdit size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
-                                            <MdDelete size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
-                                        </div>
-                                    </th>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </div >
-        </div >
+        <>
+            <div className='text-white pt-10 w-[85%] mx-auto'>
+                <div className='h-[80vh]'>
+                    {/* Table */}
+                    <table className='w-full'>
+                        <thead >
+                            <tr className='text-center text-[100%] border-b-[2px] border-[#D84F67]'>
+                                <td className='border-r-[2px] border-[#D84F67] mb-2 py-1'>Initial coins</td>
+                                <td className='border-r-[2px] border-[#D84F67] py-1'>Spend</td>
+                                <td className='border-r-[2px] border-[#D84F67] py-1'>Remaining</td>
+                                <td className='py-1'>Action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                data?.map((item, ind) => (
+                                    <tr key={ind} className='text-[#8B8B8C] text-center text-[100%]'>
+                                        <th className='py-5  font-normal'>{item?.initialCoins}</th>
+                                        <th className='py-5  font-normal'>{item?.spend}</th>
+                                        <th className='py-5  font-normal'>{item?.remaining}</th>
+                                        <th className='py-5  font-normal'>
+                                            <div className='flex items-center justify-center space-x-2'>
+                                                <FaEdit onClick={()=>setEditCoin(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                                <MdDelete size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
+                                            </div>
+                                        </th>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div >
+            </div>
+            <Loader show={load} />
+            {editcoin&&<Coin_Sheet_Modal editcoin={editcoin} closecoinsheet={closecoinsheet}/>}
+        </>
     )
 }
 

@@ -1,27 +1,84 @@
 import { Dialog, Transition } from '@headlessui/react'
+import axios from 'axios'
 import React, { Fragment, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
+import { BASE_URL } from '../../app/apiconfig/Baseurl'
+import { API_PATH } from '../../app/apiconfig/Apipath'
+import { BearerToken } from '../../app/utility/session/Cookies'
+import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { UpdateTable } from '../../app/redux/ReduxSlice'
 
-const Account_Records_Modal = ({closeaccountrecord}) => {
+const Account_Records_Modal = ({ closeaccountrecord, editrecord }) => {
+    const dispatch = useDispatch() //Use Dispatch
 
-    const  closeModal=()=>{
+
+    const closeModal = () => {
         closeaccountrecord(false)
     }
 
     //Get Input Typed Data
-    const [accountdata,setAccountdata]=useState({
-        username:"",
-        password:"",
-        status:"",
-        fbaccountlink:"",
-        agentname:""
+    const [accountdata, setAccountdata] = useState({
+        userName: editrecord?.userName,
+        password: editrecord?.password,
+        status: editrecord?.status,
+        fbLink: editrecord?.fbLink,
+        agentName: editrecord?.agentName
     })
 
     //OnChange Function
-    const handelOnChange=(e)=>{
-        const {name,value}=e.target
-        setAccountdata({...accountdata,[name]:value})
+    const handelOnChange = (e) => {
+        const { name, value } = e.target
+        setAccountdata({ ...accountdata, [name]: value })
     }
+
+    //Add Account Records Api
+    const handeladdaccountrecord = async () => {
+        if (!accountdata.userName) {
+            toast('Enter UserName', { type: 'error' })
+        } else if (!accountdata.password) {
+            toast('Enter Password', { type: 'error' })
+        } else if (!accountdata.status) {
+            toast('Enter Status', { type: 'error' })
+        } else if (!accountdata.fbLink) {
+            toast('Enter FaceBook Link', { type: 'error' })
+        } else if (!accountdata.agentName) {
+            toast('Enter Agent Name', { type: 'error' })
+        }else {
+            try {
+                const response = await axios.post(BASE_URL + API_PATH.apiAddAccountRecord, accountdata, BearerToken)
+                if (response.data.status === true) {
+                    toast(response.data.status, { type: 'success' })
+                    closeModal()
+                    dispatch(UpdateTable(true))
+                } else {
+                    toast(response.data.error, { type: 'error' })
+                    closeModal()
+                }
+            } catch (error) {
+
+            }
+        }
+
+    }
+
+    //Api Account Records Sheet Data
+    const handelaccountedit = async () => {
+        try {
+            const response = await axios.put(BASE_URL + API_PATH.apiEditAccountRecords + editrecord?.userName, accountdata, BearerToken)
+            if (response?.data?.status === true) {
+                toast(response.data.message, { type: 'success' })
+                closeModal()
+                dispatch(UpdateTable(true))
+            } else {
+                toast(response?.data?.error, { type: 'error' })
+                closeModal()
+            }
+        } catch (error) {
+
+        }
+    }
+
 
     return (
         <Transition appear show={true} as={Fragment}>
@@ -54,28 +111,28 @@ const Account_Records_Modal = ({closeaccountrecord}) => {
                                 <div className='grid grid-cols-12 gap-4'>
                                     <div className='col-span-3'>
                                         <div className='text-white text-[.9rem] pb-1'>User Name</div>
-                                        <input type='text' value={accountdata.username} onChange={(e)=>handelOnChange(e)} name='username' className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                        <input type='text' value={accountdata.userName} onChange={(e) => handelOnChange(e)} name='userName' className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
                                     </div>
                                     <div className='col-span-3'>
                                         <div className='text-white text-[.9rem] pb-1'>Password</div>
-                                        <input type='text' name='password' value={accountdata.password} onChange={(e)=>handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                        <input type='text' name='password' value={accountdata.password} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
                                     </div>
                                     <div className='col-span-3'>
                                         <div className='text-white text-[.9rem] pb-1'>Status</div>
-                                        <input type='text' name='status' value={accountdata.status} onChange={(e)=>handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                        <input type='text' name='status' value={accountdata.status} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
                                     </div>
                                     <div className='col-span-3'>
                                         <div className='text-white text-[.9rem] pb-1'>FB Account Link</div>
-                                        <input type='text' value={accountdata.fbaccountlink} onChange={(e)=>handelOnChange(e)} name='fbaccountlink'  className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                        <input type='text' value={accountdata.fbLink} onChange={(e) => handelOnChange(e)} name='fbLink' className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
                                     </div>
                                     <div className='col-span-3'>
                                         <div className='text-white text-[.9rem] pb-1'>Agent Name Using This FB Account</div>
-                                        <input type='text' name='agentname' value={accountdata.agentname} onChange={(e)=>handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                        <input type='text' name='agentName' value={accountdata.agentName} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
                                     </div>
                                 </div>
                                 {/* Add */}
                                 <div className='pt-5 flex justify-center'>
-                                    <button className='gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'>Add</button>
+                                    <button onClick={editrecord ? handelaccountedit : handeladdaccountrecord} className='gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'>Add</button>
                                 </div>
                                 {/* Close Icon */}
                                 <IoMdClose onClick={closeModal} size={25} className='absolute top-1 cursor-pointer hover:scale-105 transition-all z-10 gradient-red rounded-full right-3' />

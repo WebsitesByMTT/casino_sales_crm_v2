@@ -1,111 +1,99 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { BASE_URL } from '../../app/apiconfig/Baseurl';
+import { API_PATH } from '../../app/apiconfig/Apipath';
+import Loader from '../../app/utility/Loader';
+import Balance_Sheet_Modal from './Balance_Sheet_Modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { UpdateTable } from '../../app/redux/ReduxSlice';
+import { BearerToken } from '../../app/utility/session/Cookies';
+import Delete_Modal from '../delete/Delete_Modal';
 
 const Balance_Sheet = () => {
 
-    //Balance Sheet Dummy Data
-    const data = [
-        {
-            id: 1,
-            Employ_Name: '2025-04-12, 16:13:43',
-            Designation: '12/04/24',
-            Salary: 'Rohan',
-            Incentive: "Casino",
-            Total_Salary: 4000,
-            Review: 'Dummy Name',
-        },
-        {
-            id: 2,
-            Employ_Name: '2025-04-12, 16:13:43',
-            Designation: '12/04/24',
-            Salary: 'Rohan',
-            Incentive: "Casino",
-            Total_Salary: 4000,
-            Review: 'Dummy Name',
-        },
-        {
-            id: 3,
-            Employ_Name: '2025-04-12, 16:13:43',
-            Designation: '12/04/24',
-            Salary: 'Rohan',
-            Incentive: "Casino",
-            Total_Salary: 4000,
-            Review: 'Dummy Name',
-        }, {
-            id: 4,
-            Employ_Name: '2025-04-12, 16:13:43',
-            Designation: '12/04/24',
-            Salary: 'Rohan',
-            Incentive: "Casino",
-            Total_Salary: 4000,
-            Review: 'Dummy Name',
-        }, {
-            id: 5,
-            Employ_Name: '2025-04-12, 16:13:43',
-            Designation: '12/04/24',
-            Salary: 'Rohan',
-            Incentive: "Casino",
-            Total_Salary: 4000,
-            Review: 'Dummy Name',
-        }, {
-            id: 6,
-            Employ_Name: '2025-04-12, 16:13:43',
-            Designation: '12/04/24',
-            Salary: 'Rohan',
-            Incentive: "Casino",
-            Total_Salary: 4000,
-            Review: 'Dummy Name',
-        }, {
-            id: 7,
-            Employ_Name: '2025-04-12, 16:13:43',
-            Designation: '12/04/24',
-            Salary: 'Rohan',
-            Incentive: "Casino",
-            Total_Salary: 4000,
-            Review: 'Dummy Name',
+    const dispatch=useDispatch() //Use Dispatch
+    const state = useSelector((state) => state?.globlestate.TableState) //Geting Updated State From Redux
+    //Get Balance Sheet Api 
+    const [data, setData] = useState([])
+    const [load, setLoad] = useState(false) //Api Loading State
+
+    const handelGetBalanceSheet = async () => {
+        try {
+            setLoad(true)
+            const response = await axios.get(BASE_URL + API_PATH.apiGetBalanceSheet,BearerToken)
+            if (response?.data?.status === true) {
+                setData(response?.data?.Employees)
+                dispatch(UpdateTable(false))
+            } else {
+                setData([])
+            }
+            setLoad(false)
+        } catch (error) {
+            setLoad(false)
         }
-    ]
+    }
+    useEffect(() => {
+        handelGetBalanceSheet()
+    }, [state])
+
+    //Balance Sheet Data For Edit
+    const [edit,setEdit]=useState()
+    const closeBalanceSheet=(state)=>{
+        setEdit(state)
+    }
+
+    //Delete Data
+    const [deletedata,setDeleteData]=useState()
+    const closedeletemodal=(state)=>{
+        setDeleteData(false)
+    }
 
     return (
-        <div className='text-white pt-10 w-[90%] mx-auto'>
-            <div className='h-[80vh]'>
-                {/* Table */}
-                <table className='w-full'>
-                    <thead >
-                        <tr className='text-center text-[100%] border-b-[2px] border-[#D84F67]'>
-                            <td className='border-r-[2px] border-[#D84F67] mb-2 py-1'>Employ name</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Designation</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Salary</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Incentive</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Total Salary</td>
-                            <td className='border-r-[2px] border-[#D84F67] py-1'>Review</td>
-                            <td className='py-1'>Action</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            data?.map((item, ind) => (
-                                <tr key={ind} className='text-[#8B8B8C] text-center text-[100%]'>
-                                    <th className='py-5  font-normal'>{item?.Employ_Name}</th>
-                                    <th className='py-5  font-normal'>{item?.Designation}</th>
-                                    <th className='py-5  font-normal'>{item?.Salary}</th>
-                                    <th className='py-5  font-normal'>{item?.Incentive}</th>
-                                    <th className='py-5  font-normal'>{item?.Total_Salary}</th>
-                                    <th className='py-5  font-normal'>{item?.Review}</th>
-                                    <th className='py-5  font-normal'>
-                                        <div className='flex items-center justify-center space-x-2'>
-                                            <FaEdit size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all'/>
-                                            <MdDelete size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all'/>
-                                        </div>
-                                    </th>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+        <>
+            <div className='text-white pt-10 w-[90%] mx-auto'>
+                <div className='h-[80vh]'>
+                    {/* Table */}
+                    <table className='w-full'>
+                        <thead >
+                            <tr className='text-center text-[100%] border-b-[2px] border-[#D84F67]'>
+                                <td className='border-r-[2px] border-[#D84F67] mb-2 py-1'>Employe name</td>
+                                <td className='border-r-[2px] border-[#D84F67] py-1'>Designation</td>
+                                <td className='border-r-[2px] border-[#D84F67] py-1'>Salary</td>
+                                <td className='border-r-[2px] border-[#D84F67] py-1'>Incentive</td>
+                                <td className='border-r-[2px] border-[#D84F67] py-1'>Total Salary</td>
+                                <td className='border-r-[2px] border-[#D84F67] py-1'>Review</td>
+                                <td className='py-1'>Action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                data?.map((item, ind) => (
+                                    <tr key={ind} className='text-[#8B8B8C] text-center text-[100%]'>
+                                        <th className='py-5  font-normal'>{item?.employeeName}</th>
+                                        <th className='py-5  font-normal'>{item?.designation}</th>
+                                        <th className='py-5  font-normal'>{item?.salary}</th>
+                                        <th className='py-5  font-normal'>{item?.incentive}</th>
+                                        <th className='py-5  font-normal'>{item?.totalSalary}</th>
+                                        <th className='py-5  font-normal'>{item?.review}</th>
+                                        <th className='py-5  font-normal'>
+                                            <div className='flex items-center justify-center space-x-2'>
+                                                <FaEdit onClick={()=>setEdit(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                                <MdDelete onClick={()=>setDeleteData(item?.employeeName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
+                                            </div>
+                                        </th>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div >
             </div >
-        </div >
+            <Loader show={load} />
+            {edit&&<Balance_Sheet_Modal closeBalanceSheet={closeBalanceSheet} editdata={edit}/>}
+            {deletedata&&<Delete_Modal deletedata={API_PATH.apiDeleteBalanceSheet+deletedata} closedeletemodal={closedeletemodal}/>}
+        </>
     )
 }
 

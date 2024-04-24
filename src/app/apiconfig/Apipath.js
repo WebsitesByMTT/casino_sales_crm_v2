@@ -4,6 +4,20 @@ export const API_PATH={
    apiAddTl:'/addCustomer',
    apiUpdateTl:'/updateCustomer/',
    apiGetAgentFreshMessage:'/getFreshMessages',
-   apiGetFreeToPlay:'/getAgents/firstdeposit',
-   apiAddFreshMessage:'/addFreshMessage'
+   apiGetFreeToPlay:'/getAgents/',
+   apiAddFreshMessage:'/addFreshMessage',
+   apiGetCoinList:'/getCoinSheetList',
+   apiGetAccountRecords:'/getFbUsers',
+   apiGetBalanceSheet:'/getBalanceSheetList',
+   apiAddBalanceSheet:'/addEmployee',
+   apiEditBalanceSheet:'/updateEmployee/',
+   addCoinSheet:'/addToCoinSheet',
+   apiEditCoinSheet:'/updateCoinDetails/',
+   apiAddAccountRecord:'/addFbUser',
+   apiEditAccountRecords:'/updateFbUser/',
+   apiEditFreshMessage:'/updateFreshMessage/',
+   apiAddAget:'/addAgent/',
+   apiUpdateAgent:'/updateAgent/',
+   apiDeleteTl:'/deleteCustomer/',
+   apiDeleteBalanceSheet:'/deleteEmployee/'
 }
