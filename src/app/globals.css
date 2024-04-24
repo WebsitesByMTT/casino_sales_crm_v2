@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import 'react-toastify/dist/ReactToastify.css';
+
+
+/* Angular Gradient */
+
+.gradient{
+    background-image:conic-gradient(at 47.5% 52.5%, #171719 , #454547);
+}
+
+.gradient-dashboard{
+    background-image:conic-gradient(at 25% 75%, #171719 , #454547);
+}
+
+.gradient-red{
+    background-image: linear-gradient(#D14F4F,#D84F69);
+}
