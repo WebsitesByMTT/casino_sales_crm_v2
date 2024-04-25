@@ -9,6 +9,8 @@ import Loader from '../../app/utility/Loader';
 import { useDispatch } from 'react-redux';
 import { UpdateTable } from '../../app/redux/ReduxSlice';
 import { BearerToken } from '../../app/utility/session/Cookies';
+import Button from '../button/Button';
+import InputField from '../input/InputField';
 
 const TlEntryModal = ({ closetlpopup,tlEditdata}) => {
     const dispatch = useDispatch() //Dispatch From Redux
@@ -118,28 +120,28 @@ const TlEntryModal = ({ closetlpopup,tlEditdata}) => {
                                     <div className='grid grid-cols-12 gap-4'>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Customer name</div>
-                                            <input type='text' value={tldata.customer_name} onChange={(e) => handelOnchange(e)} name='customer_name' className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'customer_name'} Value={tldata.customer_name} changeEvent={(e) => handelOnchange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Game name</div>
-                                            <input type='text' value={tldata.game_name} name='game_name' onChange={(e) => handelOnchange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'game_name'} Value={tldata.game_name} changeEvent={(e) => handelOnchange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Amount</div>
-                                            <input type='text' value={tldata.amount} name='amount' onChange={(e) => handelOnchange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'amount'} Value={tldata.amount} changeEvent={(e) => handelOnchange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Account name</div>
-                                            <input type='text' value={tldata.account_name} name='account_name' onChange={(e) => handelOnchange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'account_name'} Value={tldata.account_name} changeEvent={(e) => handelOnchange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Remark</div>
-                                            <input type='text' name='remark' value={tldata.remark} onChange={(e) => handelOnchange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'remark'} Value={tldata.remark} changeEvent={(e) => handelOnchange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                     </div>
                                     {/* Add */}
                                     <div className='pt-5 flex justify-center'>
-                                        <button onClick={tlEditdata?EditTlData:handleadddata} className='gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'>Add</button>
+                                        <Button clickevent={tlEditdata?EditTlData:handleadddata} style={'gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'} text={'Add'}/>
                                     </div>
                                     {/* Close Icon */}
                                     <IoMdClose onClick={closeModal} size={25} className='absolute top-1 cursor-pointer hover:scale-105 transition-all z-10 gradient-red rounded-full right-3' />

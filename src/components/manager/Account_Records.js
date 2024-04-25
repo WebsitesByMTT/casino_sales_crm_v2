@@ -9,6 +9,7 @@ import { BearerToken } from '../../app/utility/session/Cookies'
 import { useDispatch, useSelector } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import Account_Records_Modal from './Account_Records_Modal'
+import Delete_Modal from '../delete/Delete_Modal'
 
 const Account_Records = () => {
 
@@ -44,6 +45,12 @@ const Account_Records = () => {
         setEditRecord(state)
     }
 
+    //Delete Account Records Data
+    const [deletedata,setDeleteData]=useState()
+    const closedeletemodal=(state)=>{
+        setDeleteData(state)
+    }
+
     return (
         <>
             <div className='text-white pt-10 w-[85%] mx-auto'>
@@ -72,7 +79,7 @@ const Account_Records = () => {
                                         <th className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
                                                 <FaEdit onClick={()=>setEditRecord(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
-                                                <MdDelete size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
+                                                <MdDelete onClick={()=>setDeleteData(item?.userName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
                                             </div>
                                         </th>
                                     </tr>
@@ -84,6 +91,7 @@ const Account_Records = () => {
             </div>
             <Loader show={load} />
             {editrecord&&<Account_Records_Modal closeaccountrecord={closeaccountrecord} editrecord={editrecord}/>}
+            {deletedata&&<Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteAccountRecords+deletedata}/>}
         </>
     )
 }

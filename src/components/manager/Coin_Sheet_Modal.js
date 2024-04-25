@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux'
 import Loader from '../../app/utility/Loader'
 import { BearerToken } from '../../app/utility/session/Cookies'
 import { toast } from 'react-toastify'
+import Button from '../button/Button'
 
 const Coin_Sheet_Modal = ({ closecoinsheet ,editcoin}) => {
 
@@ -123,7 +124,7 @@ const Coin_Sheet_Modal = ({ closecoinsheet ,editcoin}) => {
                                     </div>
                                     {/* Add */}
                                     <div className='pt-5 flex justify-center'>
-                                        <button onClick={editcoin?EditCoinSheetData:handelAddCoinSheet} className='gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'>Add</button>
+                                        <Button clickevent={editcoin?EditCoinSheetData:handelAddCoinSheet} style={'gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'} text={'Add'}/>
                                     </div>
                                     {/* Close Icon */}
                                     <IoMdClose onClick={closeModal} size={25} className='absolute top-1 cursor-pointer hover:scale-105 transition-all z-10 gradient-red rounded-full right-3' />

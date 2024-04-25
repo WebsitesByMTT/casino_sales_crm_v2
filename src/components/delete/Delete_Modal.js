@@ -8,6 +8,7 @@ import { BearerToken } from '../../app/utility/session/Cookies'
 import Loader from '../../app/utility/Loader'
 import { useDispatch } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
+import Button from '../button/Button'
 
 const Delete_Modal = ({deletedata,closedeletemodal}) => {
     const closeModal=()=>[
@@ -63,8 +64,8 @@ const Delete_Modal = ({deletedata,closedeletemodal}) => {
                                 <Dialog.Panel className="w-[70%] md:w-[30%] relative transform overflow-hidden rounded-xl border-[2px] border-[#00A5FF] bg-[#2A2A2B] p-3 py-8 text-left align-middle shadow-xl transition-all">
                                      <div className='text-center text-[100%] text-white'>Are You Want To Delete ?</div>
                                     <div className='pt-8 flex justify-center space-x-5'>
-                                        <button onClick={handelDeleteApi} className='gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'>Yes</button>
-                                        <button onClick={closeModal} className='bg-green-500 text-white px-5 py-1 rounded-md hover:scale-90 transition-all'>No</button>
+                                        <Button clickevent={handelDeleteApi} style={'gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'} text={'Yes'}/>
+                                        <Button clickevent={closeModal} style={'bg-green-500 text-white px-5 py-1 rounded-md hover:scale-90 transition-all'} text={'No'}/>
                                     </div>
                                     {/* Close Icon */}
                                     <IoMdClose onClick={closeModal} size={25} className='absolute top-1 cursor-pointer hover:scale-105 transition-all z-10 gradient-red rounded-full right-3' />

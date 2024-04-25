@@ -9,6 +9,7 @@ import { BearerToken } from '../../app/utility/session/Cookies'
 import { useDispatch, useSelector } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import Coin_Sheet_Modal from './Coin_Sheet_Modal'
+import Delete_Modal from '../delete/Delete_Modal'
 
 const Coin_Sheet = () => {
 
@@ -44,6 +45,12 @@ const Coin_Sheet = () => {
         setEditCoin(state)
     }
 
+    //Delete Coins Data
+    const [deletedata,setDeleteData]=useState()
+    const closedeletemodal=(state)=>{
+       setDeleteData(state)
+    }
+
     return (
         <>
             <div className='text-white pt-10 w-[85%] mx-auto'>
@@ -68,7 +75,7 @@ const Coin_Sheet = () => {
                                         <th className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
                                                 <FaEdit onClick={()=>setEditCoin(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
-                                                <MdDelete size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
+                                                <MdDelete onClick={()=>setDeleteData(item?.initialCoins)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
                                             </div>
                                         </th>
                                     </tr>
@@ -80,6 +87,7 @@ const Coin_Sheet = () => {
             </div>
             <Loader show={load} />
             {editcoin&&<Coin_Sheet_Modal editcoin={editcoin} closecoinsheet={closecoinsheet}/>}
+            {deletedata&&<Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteCoinSheet+deletedata}/>}
         </>
     )
 }

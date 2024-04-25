@@ -9,6 +9,7 @@ import Loader from '../../app/utility/Loader'
 import { useDispatch } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import { BearerToken } from '../../app/utility/session/Cookies'
+import Button from '../button/Button'
 
 const Fresh_Messages_Modal = ({ close_Fresh_Message,editfreshmessage}) => {
 
@@ -134,7 +135,7 @@ const Fresh_Messages_Modal = ({ close_Fresh_Message,editfreshmessage}) => {
                                     </div>
                                     {/* Add */}
                                     <div className='pt-5 flex justify-center'>
-                                        <button onClick={editfreshmessage?EditFreshmessageData:handelAddFreshMessage} className='gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'>Add</button>
+                                        <Button clickevent={editfreshmessage?EditFreshmessageData:handelAddFreshMessage} style={'gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'} text={'Add'}/>
                                     </div>
                                     {/* Close Icon */}
                                     <IoMdClose onClick={closeModal} size={25} className='absolute top-1 cursor-pointer hover:scale-105 transition-all z-10 gradient-red rounded-full right-3' />

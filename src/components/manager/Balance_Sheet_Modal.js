@@ -9,6 +9,8 @@ import Loader from '../../app/utility/Loader'
 import { useDispatch } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import { BearerToken } from '../../app/utility/session/Cookies'
+import Button from '../button/Button'
+import InputField from '../input/InputField'
 
 const Balance_Sheet_Modal = ({ closeBalanceSheet,editdata }) => {
 
@@ -72,7 +74,7 @@ const Balance_Sheet_Modal = ({ closeBalanceSheet,editdata }) => {
     //Api Edit Balance Sheet Data
     const EditBalanceSheetData=async()=>{
         try {
-            const response=await axios.post(BASE_URL+API_PATH.apiEditBalanceSheet+editdata?.employeeName,balancedata,BearerToken)
+            const response=await axios.put(BASE_URL+API_PATH.apiEditBalanceSheet+editdata?.employeeName,balancedata,BearerToken)
             if(response?.data?.status===true){
               toast(response.data.message,{type:'success'})
                closeModal()
@@ -117,32 +119,32 @@ const Balance_Sheet_Modal = ({ closeBalanceSheet,editdata }) => {
                                     <div className='grid grid-cols-12 gap-4'>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Employe name</div>
-                                            <input type='text' name='employeeName' value={balancedata.employeeName} onChange={(e) => handelChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'employeeName'} Value={balancedata.employeeName} changeEvent={(e) => handelChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Designation</div>
-                                            <input type='text' name='designation' value={balancedata.designation} onChange={(e) => handelChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'designation'} Value={balancedata.designation} changeEvent={(e) => handelChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Salary</div>
-                                            <input type='text' name='salary' value={balancedata.salary} onChange={(e) => handelChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'salary'} Value={balancedata.salary} changeEvent={(e) => handelChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Incentive</div>
-                                            <input type='text' name='incentive' value={balancedata.incentive} onChange={(e) => handelChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'incentive'} Value={balancedata.incentive} changeEvent={(e) => handelChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Total Salary</div>
-                                            <input type='text' name='totalSalary' value={balancedata.totalSalary} onChange={(e) => handelChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'totalSalary'} Value={balancedata.totalSalary} changeEvent={(e) => handelChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Review</div>
-                                            <input type='text' name='review' value={balancedata.review} onChange={(e) => handelChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'review'} Value={balancedata.review} changeEvent={(e) => handelChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                     </div>
                                     {/* Add */}
                                     <div className='pt-5 flex justify-center'>
-                                        <button onClick={editdata?EditBalanceSheetData:handelAddBalanceSheet} className='gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'>Add</button>
+                                        <Button clickevent={editdata?EditBalanceSheetData:handelAddBalanceSheet} style={'gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'} text={'Add'}/>
                                     </div>
                                     {/* Close Icon */}
                                     <IoMdClose onClick={closeModal} size={25} className='absolute top-1 cursor-pointer hover:scale-105 transition-all z-10 gradient-red rounded-full right-3' />

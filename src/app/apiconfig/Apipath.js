@@ -19,5 +19,9 @@ export const API_PATH={
    apiAddAget:'/addAgent/',
    apiUpdateAgent:'/updateAgent/',
    apiDeleteTl:'/deleteCustomer/',
-   apiDeleteBalanceSheet:'/deleteEmployee/'
+   apiDeleteBalanceSheet:'/deleteEmployee/',
+   apiDeleteAccountRecords:'/deleteFbUser/',
+   apiDeleteCoinSheet:'/deleteCoinDetails/',
+   apiDeleteFreshMessage:'/deleteFreshMessage/',
+   apiDeleteAgent:'/deleteAgent/'
 }

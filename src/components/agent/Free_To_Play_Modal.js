@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import Loader from '../../app/utility/Loader'
+import Button from '../button/Button'
 
 const Free_To_Play_Modal = ({ closeThisModal, tabclicked, editagent }) => {
 console.log(tabclicked)
@@ -145,7 +146,7 @@ console.log(tabclicked)
                                     </div>
                                     {/* Add */}
                                     <div className='pt-5 flex justify-center'>
-                                        <button onClick={editagent?EditAgentData:handelAddFreeToPlay} className='gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'>Add</button>
+                                        <Button clickevent={editagent?EditAgentData:handelAddFreeToPlay} style={'gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'} text={'Add'}/>
                                     </div>
                                     {/* Close Icon */}
                                     <IoMdClose onClick={closeModal} size={25} className='absolute top-1 cursor-pointer hover:scale-105 transition-all z-10 gradient-red rounded-full right-3' />
