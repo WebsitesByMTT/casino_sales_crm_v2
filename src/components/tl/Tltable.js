@@ -11,6 +11,7 @@ import { UpdateTable } from '../../app/redux/ReduxSlice'
 import { BearerToken, getUserDetails } from '../../app/utility/session/Cookies'
 import TlEntryModal from './TlEntryModal'
 import Delete_Modal from '../delete/Delete_Modal'
+import { GetTlData } from '../../app/apiconfig/Apis'
 
 
 const Tltable = () => {
@@ -34,9 +35,9 @@ const Tltable = () => {
     const handelGetTlData = async () => {
         try {
             setLoad(true)
-            const response = await axios.get(BASE_URL + API_PATH.apiGetTlTabel,BearerToken);
-            if (response?.data?.status === true) {
-                setData(response?.data?.customers)
+            const response = await GetTlData()
+            if (response) {
+                setData(response)
                 dispatch(UpdateTable(false))
             } else {
                 setData([])
@@ -51,6 +52,7 @@ const Tltable = () => {
     useEffect(() => {
         handelGetTlData()
     }, [state])
+
 
     //Tl Table Edit Id Dispatch
     const [edittldata,setEditTlData]=useState()

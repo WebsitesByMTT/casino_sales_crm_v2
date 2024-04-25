@@ -1,15 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { BASE_URL } from '../../app/apiconfig/Baseurl';
 import { API_PATH } from '../../app/apiconfig/Apipath';
 import Loader from '../../app/utility/Loader';
 import Balance_Sheet_Modal from './Balance_Sheet_Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { UpdateTable } from '../../app/redux/ReduxSlice';
-import { BearerToken } from '../../app/utility/session/Cookies';
 import Delete_Modal from '../delete/Delete_Modal';
+import { GetBalanceSheet } from '../../app/apiconfig/Apis';
 
 const Balance_Sheet = () => {
 
@@ -22,9 +20,9 @@ const Balance_Sheet = () => {
     const handelGetBalanceSheet = async () => {
         try {
             setLoad(true)
-            const response = await axios.get(BASE_URL + API_PATH.apiGetBalanceSheet,BearerToken)
-            if (response?.data?.status === true) {
-                setData(response?.data?.Employees)
+            const response = await GetBalanceSheet()
+            if (response) {
+                setData(response)
                 dispatch(UpdateTable(false))
             } else {
                 setData([])
@@ -47,7 +45,7 @@ const Balance_Sheet = () => {
     //Delete Data
     const [deletedata,setDeleteData]=useState()
     const closedeletemodal=(state)=>{
-        setDeleteData(false)
+        setDeleteData(state)
     }
 
     return (

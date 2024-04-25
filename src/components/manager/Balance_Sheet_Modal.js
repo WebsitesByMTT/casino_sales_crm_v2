@@ -11,6 +11,7 @@ import { UpdateTable } from '../../app/redux/ReduxSlice'
 import { BearerToken } from '../../app/utility/session/Cookies'
 import Button from '../button/Button'
 import InputField from '../input/InputField'
+import { AddBalance } from '../../app/apiconfig/Apis'
 
 const Balance_Sheet_Modal = ({ closeBalanceSheet,editdata }) => {
 
@@ -54,13 +55,13 @@ const Balance_Sheet_Modal = ({ closeBalanceSheet,editdata }) => {
         }else{
             try {
                 setLoad(true)
-                const response = await axios.post(BASE_URL + API_PATH.apiAddBalanceSheet, balancedata,BearerToken)
-                if (response?.data?.status === true) {
-                    toast(response?.data?.message, { type: 'success' })
+                const response = await AddBalance(balancedata)
+                if (response.status === true) {
+                    toast(response.message, { type: 'success' })
                     closeModal()
                     dispatch(UpdateTable(true))
                 } else {
-                    toast(response?.data?.error, { type: 'error' })
+                    toast(response.error, { type: 'error' })
                     closeModal()
                 }
                 setLoad(false)

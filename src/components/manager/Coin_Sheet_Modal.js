@@ -1,15 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react'
-import axios from 'axios'
 import React, { Fragment, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
-import { BASE_URL } from '../../app/apiconfig/Baseurl'
-import { API_PATH } from '../../app/apiconfig/Apipath'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import { useDispatch } from 'react-redux'
 import Loader from '../../app/utility/Loader'
-import { BearerToken } from '../../app/utility/session/Cookies'
 import { toast } from 'react-toastify'
 import Button from '../button/Button'
+import { addCoin, editCoin } from '../../app/apiconfig/Apis'
 
 const Coin_Sheet_Modal = ({ closecoinsheet ,editcoin}) => {
 
@@ -44,13 +41,13 @@ const Coin_Sheet_Modal = ({ closecoinsheet ,editcoin}) => {
         } else {
             try {
                 setLoad(true)
-                const response = await axios.post(BASE_URL + API_PATH.addCoinSheet, coindata, BearerToken)
-                if (response.data.status === true) {
-                    toast(response?.data?.message, { type: 'success' })
+                const response = await addCoin(coindata)
+                if (response.status === true) {
+                    toast(response.message, { type: 'success' })
                     closeModal()
                     dispatch(UpdateTable(true))
                 } else {
-                    toast(response?.data?.error, { type: 'error' })
+                    toast(response.error, { type: 'error' })
                     closeModal()
                 }
                 setLoad(false)
@@ -64,13 +61,13 @@ const Coin_Sheet_Modal = ({ closecoinsheet ,editcoin}) => {
      const EditCoinSheetData=async()=>{
         try {
             setLoad(true)
-            const response=await axios.put(BASE_URL+API_PATH.apiEditCoinSheet+editcoin?.initialCoins,coindata,BearerToken)
-            if(response?.data?.status===true){
-               toast(response.data.message,{type:'success'})
+            const response=await editCoin(editcoin?.initialCoins,coindata)
+            if(response?.status===true){
+               toast(response.message,{type:'success'})
                closeModal()
                dispatch(UpdateTable(true))
             }else{
-                toast(response?.data?.error,{type:'error'})
+                toast(response.error,{type:'error'})
                 closeModal()
             }
             setLoad(false)

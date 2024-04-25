@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import Coin_Sheet_Modal from './Coin_Sheet_Modal'
 import Delete_Modal from '../delete/Delete_Modal'
+import { GetCoinSheet } from '../../app/apiconfig/Apis'
 
 const Coin_Sheet = () => {
 
@@ -22,9 +23,9 @@ const Coin_Sheet = () => {
     const handelGetCoinList = async () => {
         try {
             setLoad(true)
-            const response = await axios.get(BASE_URL + API_PATH.apiGetCoinList, BearerToken)
-            if (response?.data?.status === true) {
-                setData(response.data.coinLists)
+            const response = await GetCoinSheet()
+            if (response) {
+                setData(response)
                 dispatch(UpdateTable(false))
             } else {
                 setData([])
@@ -40,15 +41,15 @@ const Coin_Sheet = () => {
     }, [state])
 
     //Edit Coins Data
-    const [editcoin,setEditCoin]=useState()
-    const closecoinsheet=(state)=>{
+    const [editcoin, setEditCoin] = useState()
+    const closecoinsheet = (state) => {
         setEditCoin(state)
     }
 
     //Delete Coins Data
-    const [deletedata,setDeleteData]=useState()
-    const closedeletemodal=(state)=>{
-       setDeleteData(state)
+    const [deletedata, setDeleteData] = useState()
+    const closedeletemodal = (state) => {
+        setDeleteData(state)
     }
 
     return (
@@ -74,8 +75,8 @@ const Coin_Sheet = () => {
                                         <th className='py-5  font-normal'>{item?.remaining}</th>
                                         <th className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
-                                                <FaEdit onClick={()=>setEditCoin(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
-                                                <MdDelete onClick={()=>setDeleteData(item?.initialCoins)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
+                                                <FaEdit onClick={() => setEditCoin(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                                <MdDelete onClick={() => setDeleteData(item?.initialCoins)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
                                             </div>
                                         </th>
                                     </tr>
@@ -86,8 +87,8 @@ const Coin_Sheet = () => {
                 </div >
             </div>
             <Loader show={load} />
-            {editcoin&&<Coin_Sheet_Modal editcoin={editcoin} closecoinsheet={closecoinsheet}/>}
-            {deletedata&&<Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteCoinSheet+deletedata}/>}
+            {editcoin && <Coin_Sheet_Modal editcoin={editcoin} closecoinsheet={closecoinsheet} />}
+            {deletedata && <Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteCoinSheet + deletedata} />}
         </>
     )
 }

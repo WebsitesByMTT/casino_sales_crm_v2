@@ -1,16 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react'
-import axios from 'axios';
 import React, { Fragment, useState } from 'react'
 import { IoMdClose } from "react-icons/io";
 import { toast } from 'react-toastify';
-import { BASE_URL } from '../../app/apiconfig/Baseurl';
-import { API_PATH } from '../../app/apiconfig/Apipath';
 import Loader from '../../app/utility/Loader';
 import { useDispatch } from 'react-redux';
 import { UpdateTable } from '../../app/redux/ReduxSlice';
-import { BearerToken } from '../../app/utility/session/Cookies';
 import Button from '../button/Button';
 import InputField from '../input/InputField';
+import { addtl, edittl } from '../../app/apiconfig/Apis';
 
 const TlEntryModal = ({ closetlpopup,tlEditdata}) => {
     const dispatch = useDispatch() //Dispatch From Redux
@@ -57,9 +54,9 @@ const TlEntryModal = ({ closetlpopup,tlEditdata}) => {
         } else {
             try {
                 setLoad(true)
-                const response = await axios.post(BASE_URL + API_PATH.apiAddTl, data,BearerToken)
-                if (response?.data?.status === true) {
-                    toast(response.data.message, { type: 'success' })
+                const response = await addtl(data)
+                if (response.status === true) {
+                    toast(response.message, { type: 'success' })
                     closeModal()
                     dispatch(UpdateTable(true))
                 } else {
@@ -75,9 +72,9 @@ const TlEntryModal = ({ closetlpopup,tlEditdata}) => {
     //Edit Tl Data Api is Here
     const EditTlData=async()=>{
         try {
-            const response=await axios.put(BASE_URL+API_PATH.apiUpdateTl+tlEditdata.customerName,data,BearerToken)
-            if(response?.data?.status===true){
-              toast(response.data.message,{type:'success'})
+            const response=await edittl(data.customerName,data)
+            if(response.status===true){
+              toast(response.message,{type:'success'})
                closeModal()
                dispatch(UpdateTable(true))
             }else{
