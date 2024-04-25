@@ -9,6 +9,7 @@ import Loader from '../../app/utility/Loader'
 import { useDispatch } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import Button from '../button/Button'
+import { Delete } from '../../app/apiconfig/Apis'
 
 const Delete_Modal = ({deletedata,closedeletemodal}) => {
     const closeModal=()=>[
@@ -21,8 +22,8 @@ const Delete_Modal = ({deletedata,closedeletemodal}) => {
     const handelDeleteApi=async()=>{
         try {
             setLoad(true)
-            const response = await axios.delete(BASE_URL+deletedata,BearerToken)
-            if(response.data.status===true){
+            const response = await Delete(deletedata)
+            if(response.status===true){
               toast('Deleted',{type:'success'})
                dispatch(UpdateTable(true))
               closeModal()

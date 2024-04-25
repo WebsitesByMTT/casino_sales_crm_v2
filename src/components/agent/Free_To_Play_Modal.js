@@ -1,16 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react'
-import axios from 'axios'
 import React, { Fragment, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
-import { BASE_URL } from '../../app/apiconfig/Baseurl'
-import { API_PATH } from '../../app/apiconfig/Apipath'
-import { BearerToken } from '../../app/utility/session/Cookies'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import Loader from '../../app/utility/Loader'
 import Button from '../button/Button'
 import InputField from '../input/InputField'
+import { AddAgent, EditAgent } from '../../app/apiconfig/Apis'
 
 const Free_To_Play_Modal = ({ closeThisModal, tabclicked, editagent }) => {
 console.log(tabclicked)
@@ -54,13 +51,13 @@ console.log(tabclicked)
         } else {
             try {
                 setLoad(true)
-                const response = await axios.post(BASE_URL + API_PATH.apiAddAget + tabclicked, data, BearerToken)
-                if (response.data.status === true) {
-                    toast(response.data.message, { type: 'success' })
+                const response = await AddAgent(tabclicked,data) 
+                if (response.status === true) {
+                    toast(response.message, { type: 'success' })
                     closeModal()
                     dispatch(UpdateTable(true))
                 } else {
-                    toast(response.data.error, { type: 'error' })
+                    toast(response.error, { type: 'error' })
                     closeModal()
                 }
                 setLoad(false)
@@ -74,8 +71,8 @@ console.log(tabclicked)
     const EditAgentData = async () => {
         try {
             setLoad(true)
-            const response = await axios.put(BASE_URL + API_PATH.apiUpdateAgent+tabclicked+'/'+editagent.agentName, data, BearerToken)
-            if (response?.data?.status === true) {
+            const response = await EditAgent(tabclicked,editagent.agentName,data)
+            if (response.status === true) {
                 toast('Agent Updated Successfuly', { type: 'success' })
                 closeModal()
                 dispatch(UpdateTable(true))

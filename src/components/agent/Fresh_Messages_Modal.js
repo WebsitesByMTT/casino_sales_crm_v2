@@ -11,6 +11,7 @@ import { UpdateTable } from '../../app/redux/ReduxSlice'
 import { BearerToken } from '../../app/utility/session/Cookies'
 import Button from '../button/Button'
 import InputField from '../input/InputField'
+import { AddFreshMessage, EditFreshMessage } from '../../app/apiconfig/Apis'
 
 const Fresh_Messages_Modal = ({ close_Fresh_Message,editfreshmessage}) => {
 
@@ -52,9 +53,9 @@ const Fresh_Messages_Modal = ({ close_Fresh_Message,editfreshmessage}) => {
         } else {
             try {
                 setLoad(true)
-                const response = await axios.post(BASE_URL + API_PATH.apiAddFreshMessage, data,BearerToken)
-                if (response?.data?.status === true) {
-                    toast(response.data.message, { type: 'success' })
+                const response = await AddFreshMessage(data)
+                if (response?.status === true) {
+                    toast(response.message, { type: 'success' })
                     closeModal()
                     dispatch(UpdateTable(true))
                 }
@@ -68,9 +69,9 @@ const Fresh_Messages_Modal = ({ close_Fresh_Message,editfreshmessage}) => {
      //Edit Fresh Message Data Api is Here
      const EditFreshmessageData=async()=>{
         try {
-            const response=await axios.put(BASE_URL+API_PATH.apiEditFreshMessage+editfreshmessage.agentName,data,BearerToken)
-            if(response?.data?.status===true){
-               toast(response.data.message,{type:'success'})
+            const response=await EditFreshMessage(editfreshmessage.agentName,data)
+            if(response.status===true){
+               toast(response.message,{type:'success'})
                closeModal()
                dispatch(UpdateTable(true))
             }else{
