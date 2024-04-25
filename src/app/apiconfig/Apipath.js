@@ -23,5 +23,6 @@ export const API_PATH={
    apiDeleteAccountRecords:'/deleteFbUser/',
    apiDeleteCoinSheet:'/deleteCoinDetails/',
    apiDeleteFreshMessage:'/deleteFreshMessage/',
-   apiDeleteAgent:'/deleteAgent/'
+   apiDeleteAgent:'/deleteAgent/',
+   apiLogout:'/logout'
 }

@@ -15,8 +15,12 @@ import { useRouter } from 'next/navigation'
 import Fresh_Messages_Modal from '../../components/agent/Fresh_Messages_Modal'
 import Free_To_Play from '../../components/agent/Free_To_Play'
 import Free_To_Play_Modal from '../../components/agent/Free_To_Play_Modal'
-import { deletToken, getUserDetails } from '../utility/session/Cookies'
+import { BearerToken, deletToken, getUserDetails } from '../utility/session/Cookies'
 import Button from '../../components/button/Button'
+import axios from 'axios'
+import { BASE_URL } from '../apiconfig/Baseurl'
+import { API_PATH } from '../apiconfig/Apipath'
+import Loader from '../utility/Loader'
 
 const page = () => {
   //Get UserDetails 
@@ -36,12 +40,24 @@ const page = () => {
 
   //Use Router
   const Router = useRouter()
-
   //Logout dispatch
-  const handelLogOut = () => {
-    deletToken()
-    toast('Logout Successful', { type: 'success' })
-    Router.push('/')
+  const [load,setLoad]=useState(false)
+  const handelLogOut =async() => {
+    const userWhoLogout={
+      userName : userdetail?.userName
+  }
+      try {
+        setLoad(true)
+        const response=await axios.put(BASE_URL+API_PATH.apiLogout,userWhoLogout,BearerToken)
+        if(response.data.status===true){
+          deletToken()
+          toast('Logout Successful', { type: 'success' })
+          Router.push('/')   
+        }
+        setLoad(false)
+      } catch (error) {
+        setLoad(false)
+      }
   }
 
   //Tl Manager Agent Tab State
@@ -203,6 +219,7 @@ const page = () => {
       {freshmessage && <Fresh_Messages_Modal close_Fresh_Message={closeFreshMessage} />}
       {freemodal && <Free_To_Play_Modal tabclicked={agenttab === "Free_To_Play" ? "freetoplay" : "firstdeposit"} closeThisModal={closeFreeModal} />}
       {/* Agent Entry Popup */}
+      <Loader show={load}/>
     </>
   )
 }

@@ -74,7 +74,7 @@ const Free_To_Play = ({ tabclicked }) => {
                                 <th className='border-r-[2px] border-[#D84F67] py-1'>Amount of Coins</th>
                                 <th className='border-r-[2px] border-[#D84F67] py-1'>Account Name</th>
                                 <th className='border-r-[2px] border-[#D84F67] py-1'>Remarks</th>
-                                <th className='py-1'>Action</th>
+                                {tabclicked==="freetoplay"&&<th className='py-1'>Action</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -88,12 +88,12 @@ const Free_To_Play = ({ tabclicked }) => {
                                         <td className='py-5  font-normal'>{item?.amountOfCoins}</td>
                                         <td className='py-5  font-normal'>{item?.accountName}</td>
                                         <td className='py-5  font-normal'>{item?.remarks}</td>
-                                        <td className='py-5  font-normal'>
+                                        {tabclicked==="freetoplay"&&<td className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
                                                 <FaEdit onClick={()=>setEditAgent(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
                                                 {userdetail?.designation === "Agent" ? null : <MdDelete onClick={()=>setDeleteData(item?.agentName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
                                             </div>
-                                        </td>
+                                        </td>}
                                     </tr>
                                 ))
                             }

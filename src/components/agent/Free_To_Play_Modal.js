@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import Loader from '../../app/utility/Loader'
 import Button from '../button/Button'
+import InputField from '../input/InputField'
 
 const Free_To_Play_Modal = ({ closeThisModal, tabclicked, editagent }) => {
 console.log(tabclicked)
@@ -121,27 +122,27 @@ console.log(tabclicked)
                                     <div className='grid grid-cols-12 gap-4'>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Agent Name</div>
-                                            <input type='text' name='agentName' value={data.agentName} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'agentName'} Value={data.agentName} changeEvent={(e) => handelOnChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Customer Name/FB ID</div>
-                                            <input type='text' name='customerName' value={data.customerName} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'customerName'} Value={data.customerName} changeEvent={(e) => handelOnChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Game Name</div>
-                                            <input type='text' name='gameName' value={data.gameName} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'gameName'} Value={data.gameName} changeEvent={(e) => handelOnChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Amount Of Coins</div>
-                                            <input type='text' name='amountOfCoins' value={data.amountOfCoins} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'amountOfCoins'} Value={data.amountOfCoins} changeEvent={(e) => handelOnChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Account Name</div>
-                                            <input type='text' name='accountName' value={data.accountName} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'accountName'} Value={data.accountName} changeEvent={(e) => handelOnChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Remarks</div>
-                                            <input type='text' name='remarks' value={data.remarks} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'remarks'} Value={data.remarks} changeEvent={(e) => handelOnChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                     </div>
                                     {/* Add */}
