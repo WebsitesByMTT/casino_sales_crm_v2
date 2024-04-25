@@ -9,6 +9,8 @@ import Loader from '../../app/utility/Loader'
 import { useDispatch } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import { BearerToken } from '../../app/utility/session/Cookies'
+import Button from '../button/Button'
+import InputField from '../input/InputField'
 
 const Fresh_Messages_Modal = ({ close_Fresh_Message,editfreshmessage}) => {
 
@@ -113,28 +115,28 @@ const Fresh_Messages_Modal = ({ close_Fresh_Message,editfreshmessage}) => {
                                     <div className='grid grid-cols-12 gap-4'>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Agent Name</div>
-                                            <input type='text' name='agentName' value={data.agentName} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'agentName'} Value={data.agentName} changeEvent={(e) => handelOnChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>System Number</div>
-                                            <input type='text' name='systemNumber' value={data.systemNumber} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'systemNumber'} Value={data.systemNumber} changeEvent={(e) => handelOnChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Account Name</div>
-                                            <input type='text' name='accountName' value={data.accountName} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'accountName'} Value={data.accountName} changeEvent={(e) => handelOnChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Player ID/Receivers FB ID</div>
-                                            <input type='text' name='playerId' value={data.playerId} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'playerId'} Value={data.playerId} changeEvent={(e) => handelOnChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                         <div className='col-span-3'>
                                             <div className='text-white text-[.9rem] pb-1'>Remark</div>
-                                            <input type='text' name='remarks' value={data.remarks} onChange={(e) => handelOnChange(e)} className='bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full' />
+                                            <InputField Type={'text'} Name={'remarks'} Value={data.remarks} changeEvent={(e) => handelOnChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'}/>
                                         </div>
                                     </div>
                                     {/* Add */}
                                     <div className='pt-5 flex justify-center'>
-                                        <button onClick={editfreshmessage?EditFreshmessageData:handelAddFreshMessage} className='gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'>Add</button>
+                                        <Button clickevent={editfreshmessage?EditFreshmessageData:handelAddFreshMessage} style={'gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'} text={'Add'}/>
                                     </div>
                                     {/* Close Icon */}
                                     <IoMdClose onClick={closeModal} size={25} className='absolute top-1 cursor-pointer hover:scale-105 transition-all z-10 gradient-red rounded-full right-3' />

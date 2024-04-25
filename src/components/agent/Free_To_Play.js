@@ -9,6 +9,7 @@ import Loader from '../../app/utility/Loader'
 import { useDispatch, useSelector } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import Free_To_Play_Modal from './Free_To_Play_Modal'
+import Delete_Modal from '../delete/Delete_Modal'
 
 const Free_To_Play = ({ tabclicked }) => {
 
@@ -52,6 +53,12 @@ const Free_To_Play = ({ tabclicked }) => {
         setEditAgent(state)
     }
 
+    //Delete Agent 
+    const [deletedata,setDeleteData]=useState()
+    const closedeletemodal=(state)=>{
+        setDeleteData(state)
+    }
+
     return (
         <>
             <div className='text-white pt-10 w-[85%] mx-auto'>
@@ -67,7 +74,7 @@ const Free_To_Play = ({ tabclicked }) => {
                                 <th className='border-r-[2px] border-[#D84F67] py-1'>Amount of Coins</th>
                                 <th className='border-r-[2px] border-[#D84F67] py-1'>Account Name</th>
                                 <th className='border-r-[2px] border-[#D84F67] py-1'>Remarks</th>
-                                <th className='py-1'>Action</th>
+                                {tabclicked==="freetoplay"&&<th className='py-1'>Action</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -81,12 +88,12 @@ const Free_To_Play = ({ tabclicked }) => {
                                         <td className='py-5  font-normal'>{item?.amountOfCoins}</td>
                                         <td className='py-5  font-normal'>{item?.accountName}</td>
                                         <td className='py-5  font-normal'>{item?.remarks}</td>
-                                        <td className='py-5  font-normal'>
+                                        {tabclicked==="freetoplay"&&<td className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
                                                 <FaEdit onClick={()=>setEditAgent(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
-                                                {userdetail?.designation === "Agent" ? null : <MdDelete size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
+                                                {userdetail?.designation === "Agent" ? null : <MdDelete onClick={()=>setDeleteData(item?.agentName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
                                             </div>
-                                        </td>
+                                        </td>}
                                     </tr>
                                 ))
                             }
@@ -96,6 +103,7 @@ const Free_To_Play = ({ tabclicked }) => {
             </div>
             <Loader show={load} />
             {editagent&&<Free_To_Play_Modal tabclicked={tabclicked} editagent={editagent} closeThisModal={closeThisModal}/>}
+            {deletedata&&<Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteAgent+tabclicked+'/'+deletedata}/>}
         </>
     )
 }

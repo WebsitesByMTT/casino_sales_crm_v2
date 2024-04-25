@@ -9,6 +9,7 @@ import Loader from '../../app/utility/Loader'
 import { useDispatch, useSelector } from 'react-redux'
 import Fresh_Messages_Modal from './Fresh_Messages_Modal'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
+import Delete_Modal from '../delete/Delete_Modal'
 const Fresh_Messages = () => {
 
     const dispatch=useDispatch()
@@ -52,6 +53,12 @@ const Fresh_Messages = () => {
         setEditFreshMessage(state)
     }
 
+    //Delete Fresh Message
+    const [deletedata,setDeleteData]=useState()
+    const closedeletemodal=(state)=>{
+       setDeleteData(state)
+    }
+
     return (
         <>
             <div className='text-white pt-10 w-[85%] mx-auto'>
@@ -84,7 +91,7 @@ const Fresh_Messages = () => {
                                         <td className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
                                                 <FaEdit size={20} onClick={()=>setEditFreshMessage(item)} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
-                                                {userdetail?.designation === "Agent" ? null : <MdDelete size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
+                                                {userdetail?.designation === "Agent" ? null : <MdDelete onClick={()=>setDeleteData(item?.agentName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
                                             </div>
                                         </td>
                                     </tr>
@@ -96,6 +103,7 @@ const Fresh_Messages = () => {
             </div>
             <Loader show={load} />
             {editfreshmessage&&<Fresh_Messages_Modal editfreshmessage={editfreshmessage} close_Fresh_Message={close_Fresh_Message}/>}
+            {deletedata&&<Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteFreshMessage+deletedata}/>}
         </>
     )
 }
