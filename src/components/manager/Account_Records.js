@@ -1,15 +1,13 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
-import { BASE_URL } from '../../app/apiconfig/Baseurl'
 import { API_PATH } from '../../app/apiconfig/Apipath'
 import Loader from '../../app/utility/Loader'
-import { BearerToken } from '../../app/utility/session/Cookies'
 import { useDispatch, useSelector } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import Account_Records_Modal from './Account_Records_Modal'
 import Delete_Modal from '../delete/Delete_Modal'
+import { GetAccountRecord } from '../../app/apiconfig/Apis'
 
 const Account_Records = () => {
 
@@ -23,9 +21,9 @@ const Account_Records = () => {
     const handelAccountRecordsList = async () => {
         try {
             setLoad(true)
-            const response = await axios.get(BASE_URL + API_PATH.apiGetAccountRecords,BearerToken)
-            if (response?.data?.status === true) {
-                setData(response.data.fbUsersList)
+            const response = await GetAccountRecord()
+            if (response) {
+                setData(response)
                 dispatch(UpdateTable(false))
             } else {
                 setData([])

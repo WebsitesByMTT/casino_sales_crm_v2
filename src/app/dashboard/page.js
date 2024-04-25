@@ -15,12 +15,10 @@ import { useRouter } from 'next/navigation'
 import Fresh_Messages_Modal from '../../components/agent/Fresh_Messages_Modal'
 import Free_To_Play from '../../components/agent/Free_To_Play'
 import Free_To_Play_Modal from '../../components/agent/Free_To_Play_Modal'
-import { BearerToken, deletToken, getUserDetails } from '../utility/session/Cookies'
+import { deletToken, getUserDetails } from '../utility/session/Cookies'
 import Button from '../../components/button/Button'
-import axios from 'axios'
-import { BASE_URL } from '../apiconfig/Baseurl'
-import { API_PATH } from '../apiconfig/Apipath'
 import Loader from '../utility/Loader'
+import { LogOut } from '../apiconfig/Apis'
 
 const page = () => {
   //Get UserDetails 
@@ -48,8 +46,8 @@ const page = () => {
   }
       try {
         setLoad(true)
-        const response=await axios.put(BASE_URL+API_PATH.apiLogout,userWhoLogout,BearerToken)
-        if(response.data.status===true){
+        const response = await LogOut(userWhoLogout)
+        if(response.status===true){
           deletToken()
           toast('Logout Successful', { type: 'success' })
           Router.push('/')   

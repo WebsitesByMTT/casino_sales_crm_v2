@@ -1,17 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react'
-import axios from 'axios'
 import React, { Fragment, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
-import { BASE_URL } from '../../app/apiconfig/Baseurl'
-import { API_PATH } from '../../app/apiconfig/Apipath'
 import { toast } from 'react-toastify'
 import Loader from '../../app/utility/Loader'
 import { useDispatch } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
-import { BearerToken } from '../../app/utility/session/Cookies'
 import Button from '../button/Button'
 import InputField from '../input/InputField'
-import { AddBalance } from '../../app/apiconfig/Apis'
+import { AddBalance, EditBalance } from '../../app/apiconfig/Apis'
 
 const Balance_Sheet_Modal = ({ closeBalanceSheet,editdata }) => {
 
@@ -75,13 +71,13 @@ const Balance_Sheet_Modal = ({ closeBalanceSheet,editdata }) => {
     //Api Edit Balance Sheet Data
     const EditBalanceSheetData=async()=>{
         try {
-            const response=await axios.put(BASE_URL+API_PATH.apiEditBalanceSheet+editdata?.employeeName,balancedata,BearerToken)
-            if(response?.data?.status===true){
-              toast(response.data.message,{type:'success'})
+            const response=await EditBalance(editdata?.employeeName,balancedata)
+            if(response.status===true){
+              toast(response.message,{type:'success'})
                closeModal()
                dispatch(UpdateTable(true))
             }else{
-                toast(response?.data?.error,{type:'error'})
+                toast(response.error,{type:'error'})
                 closeModal()
             }
         } catch (error) {

@@ -1,15 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react'
-import axios from 'axios'
 import React, { Fragment, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
-import { BASE_URL } from '../../app/apiconfig/Baseurl'
-import { API_PATH } from '../../app/apiconfig/Apipath'
-import { BearerToken } from '../../app/utility/session/Cookies'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import Button from '../button/Button'
 import InputField from '../input/InputField'
+import { AddAccount, EditAccount } from '../../app/apiconfig/Apis'
 
 const Account_Records_Modal = ({ closeaccountrecord, editrecord }) => {
     const dispatch = useDispatch() //Use Dispatch
@@ -48,13 +45,13 @@ const Account_Records_Modal = ({ closeaccountrecord, editrecord }) => {
             toast('Enter Agent Name', { type: 'error' })
         }else {
             try {
-                const response = await axios.post(BASE_URL + API_PATH.apiAddAccountRecord, accountdata, BearerToken)
-                if (response.data.status === true) {
-                    toast(response.data.status, { type: 'success' })
+                const response = await AddAccount(accountdata)
+                if (response.status === true) {
+                    toast(response.message, { type: 'success' })
                     closeModal()
                     dispatch(UpdateTable(true))
                 } else {
-                    toast(response.data.error, { type: 'error' })
+                    toast(response.error, { type: 'error' })
                     closeModal()
                 }
             } catch (error) {
@@ -67,13 +64,13 @@ const Account_Records_Modal = ({ closeaccountrecord, editrecord }) => {
     //Api Account Records Sheet Data
     const handelaccountedit = async () => {
         try {
-            const response = await axios.put(BASE_URL + API_PATH.apiEditAccountRecords + editrecord?.userName, accountdata, BearerToken)
-            if (response?.data?.status === true) {
-                toast(response.data.message, { type: 'success' })
+            const response = await EditAccount(editrecord?.userName,accountdata)
+            if (response.status === true) {
+                toast(response.message, { type: 'success' })
                 closeModal()
                 dispatch(UpdateTable(true))
             } else {
-                toast(response?.data?.error, { type: 'error' })
+                toast(response.error, { type: 'error' })
                 closeModal()
             }
         } catch (error) {

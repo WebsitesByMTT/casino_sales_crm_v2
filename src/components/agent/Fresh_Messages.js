@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
-import { BearerToken, getUserDetails } from '../../app/utility/session/Cookies'
-import axios from 'axios'
-import { BASE_URL } from '../../app/apiconfig/Baseurl'
+import { getUserDetails } from '../../app/utility/session/Cookies'
 import { API_PATH } from '../../app/apiconfig/Apipath'
 import Loader from '../../app/utility/Loader'
 import { useDispatch, useSelector } from 'react-redux'
 import Fresh_Messages_Modal from './Fresh_Messages_Modal'
 import { UpdateTable } from '../../app/redux/ReduxSlice'
 import Delete_Modal from '../delete/Delete_Modal'
+import { GetFreshMessage } from '../../app/apiconfig/Apis'
 const Fresh_Messages = () => {
 
     const dispatch=useDispatch()
@@ -33,9 +32,9 @@ const Fresh_Messages = () => {
     const handelGetFreshMessage = async () => {
         try {
             setLoad(true)
-            const response = await axios.get(BASE_URL + API_PATH.apiGetAgentFreshMessage, BearerToken)
-            if (response?.data?.status === true) {
-                setData(response?.data?.freshMessageList)
+            const response = await GetFreshMessage()
+            if (response) {
+                setData(response)
                 dispatch(UpdateTable(false))
             }
             setLoad(false)
