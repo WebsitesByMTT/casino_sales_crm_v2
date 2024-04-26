@@ -4,8 +4,7 @@ import { MdDelete } from 'react-icons/md'
 import { API_PATH } from '../../app/apiconfig/Apipath'
 import Loader from '../../app/utility/Loader'
 import { useDispatch, useSelector } from 'react-redux'
-import { UpdateTable } from '../../app/redux/ReduxSlice'
-import Account_Records_Modal from './Account_Records_Modal'
+import { EditData, ModalType, UpdateTable } from '../../app/redux/ReduxSlice'
 import Delete_Modal from '../delete/Delete_Modal'
 import { GetAccountRecord } from '../../app/apiconfig/Apis'
 
@@ -37,16 +36,15 @@ const Account_Records = () => {
         handelAccountRecordsList()
     }, [state])
 
-    //Edit Account Records
-    const [editrecord,setEditRecord]=useState()
-    const closeaccountrecord=(state)=>{
-        setEditRecord(state)
-    }
-
     //Delete Account Records Data
     const [deletedata,setDeleteData]=useState()
     const closedeletemodal=(state)=>{
         setDeleteData(state)
+    }
+
+    const handelEdit=(data)=>{
+        dispatch(EditData(data))
+        dispatch(ModalType('account'))
     }
 
     return (
@@ -76,7 +74,7 @@ const Account_Records = () => {
                                         <th className='py-5  font-normal'>{item?.agentName}</th>
                                         <th className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
-                                                <FaEdit onClick={()=>setEditRecord(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                                <FaEdit onClick={()=>handelEdit(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
                                                 <MdDelete onClick={()=>setDeleteData(item?.userName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
                                             </div>
                                         </th>
@@ -88,7 +86,6 @@ const Account_Records = () => {
                 </div >
             </div>
             <Loader show={load} />
-            {editrecord&&<Account_Records_Modal closeaccountrecord={closeaccountrecord} editrecord={editrecord}/>}
             {deletedata&&<Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteAccountRecords+deletedata}/>}
         </>
     )

@@ -6,8 +6,8 @@ export default function middleware(req) {
   console.log('middleware working')
     const loggedin = req.cookies.get("token");
     const { pathname } = req.nextUrl;
-    if(!loggedin&&pathname!=='/'){
-        return NextResponse.redirect(new URL("/", req.url));
+    if(!loggedin&&pathname!=='/login'){
+        return NextResponse.redirect(new URL("/login", req.url));
     }
 
     // For any other cases return

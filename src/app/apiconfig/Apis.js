@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
-const token = Cookies.get("token");
+const token = Cookies?.get('token');
 import { API_PATH } from './Apipath';
 
 
@@ -9,6 +9,7 @@ const BearerToken = {
         Authorization: `Bearer ${token}`
     }
 }
+
 const GetTlData = async () => {
     try {
         const response = await axios.get(process.env.NEXT_PUBLIC_SERVER_BASE_URL + API_PATH.apiGetTlTabel, BearerToken);
@@ -199,11 +200,21 @@ const Delete=async(deletedata)=>{
 
 const LogOut=async(userWhoLogout)=>{
     try {
-        const response=await axios.put(process.env.NEXT_PUBLIC_SERVER_BASE_UR+API_PATH.apiLogout,userWhoLogout,BearerToken)
+        const response=await axios.put(process.env.NEXT_PUBLIC_SERVER_BASE_URL+API_PATH.apiLogout,userWhoLogout,BearerToken)
         return response?.data
     } catch (error) {
         console.log(error)
         throw error         
+    }
+}
+
+const login=async(logindata)=>{
+    try {
+        const response = await axios.post(process.env.NEXT_PUBLIC_SERVER_BASE_URL + API_PATH.apilogin, logindata)
+        return response?.data
+    } catch (error) {
+        console.log(error)
+        throw error
     }
 }
 
@@ -229,5 +240,6 @@ export
     AddAgent,
     EditAgent,
     Delete,
-    LogOut
+    LogOut,
+    login
 };

@@ -4,8 +4,7 @@ import { MdDelete } from 'react-icons/md'
 import { API_PATH } from '../../app/apiconfig/Apipath'
 import Loader from '../../app/utility/Loader'
 import { useDispatch, useSelector } from 'react-redux'
-import { UpdateTable } from '../../app/redux/ReduxSlice'
-import Coin_Sheet_Modal from './Coin_Sheet_Modal'
+import { EditData, ModalType, UpdateTable } from '../../app/redux/ReduxSlice'
 import Delete_Modal from '../delete/Delete_Modal'
 import { GetCoinSheet } from '../../app/apiconfig/Apis'
 
@@ -37,18 +36,16 @@ const Coin_Sheet = () => {
         handelGetCoinList()
     }, [state])
 
-    //Edit Coins Data
-    const [editcoin, setEditCoin] = useState()
-    const closecoinsheet = (state) => {
-        setEditCoin(state)
-    }
-
     //Delete Coins Data
     const [deletedata, setDeleteData] = useState()
     const closedeletemodal = (state) => {
         setDeleteData(state)
     }
 
+    const handelEdit=(data)=>{
+        dispatch(EditData(data))
+        dispatch(ModalType('coinsheet'))
+    }
     return (
         <>
             <div className='text-white pt-10 w-[85%] mx-auto'>
@@ -72,7 +69,7 @@ const Coin_Sheet = () => {
                                         <th className='py-5  font-normal'>{item?.remaining}</th>
                                         <th className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
-                                                <FaEdit onClick={() => setEditCoin(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                                <FaEdit onClick={() => handelEdit(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
                                                 <MdDelete onClick={() => setDeleteData(item?.initialCoins)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
                                             </div>
                                         </th>
@@ -84,7 +81,6 @@ const Coin_Sheet = () => {
                 </div >
             </div>
             <Loader show={load} />
-            {editcoin && <Coin_Sheet_Modal editcoin={editcoin} closecoinsheet={closecoinsheet} />}
             {deletedata && <Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteCoinSheet + deletedata} />}
         </>
     )
