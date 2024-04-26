@@ -9,6 +9,9 @@ export default function middleware(req) {
     if(!loggedin&&pathname!=='/login'){
         return NextResponse.redirect(new URL("/login", req.url));
     }
+    if (loggedin && pathname === "/login") {
+      return NextResponse.redirect(new URL(`/dashboard`, req.url));
+    }
 
     // For any other cases return
   return NextResponse.next()
