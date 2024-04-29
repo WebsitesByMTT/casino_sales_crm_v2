@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-
 export const reduxSlice = createSlice({
     name: 'globlestate',
-    initialState: {
+    initialState:{
         TableState:false,
         ModalType:"",
         EditData:{}
@@ -17,11 +16,9 @@ export const reduxSlice = createSlice({
         },
         EditData:(state,action)=>{
             state.EditData=action.payload
-        }
-        
+        }   
     },
 })
-
 // Action creators are generated for each case reducer function
 export const {UpdateTable,ModalType,EditData} = reduxSlice.actions
 export default reduxSlice.reducer

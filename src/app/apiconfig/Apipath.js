@@ -24,5 +24,13 @@ export const API_PATH={
    apiDeleteCoinSheet:'/deleteCoinDetails/',
    apiDeleteFreshMessage:'/deleteFreshMessage/',
    apiDeleteAgent:'/deleteAgent/',
-   apiLogout:'/logout'
+   apiLogout:'/logout',
+   apiGetDespositAgent:'/getFirstDepositsByAgent',
+   apiAddDepositAgent:'/addFirstDepositByAgent',
+   EditDepositByAgent:'/updateFirstDepositByAgent/',
+   DeleteByAgent:'/deleteFirstDepositByAgent/',
+   apiAddDesposit:'/addFirstDepositByTlAndManager',
+   apiGetDeposit:'/getFirstDepositsByTlAndManager',
+   apiEditDeposit:'/updateFirstDepositByTlAndManager/',
+   apiDeleteDeposit:'/deleteFirstDepositByTlAndManager/'
 }

@@ -5,6 +5,8 @@ import Account_Records from '../manager/Account_Records'
 import Fresh_Messages from '../agent/Fresh_Messages'
 import Free_To_Play from '../agent/Free_To_Play'
 import Tltable from '../tl/Tltable'
+import Deposit_By_Agent from '../agent/Deposit_By_Agent'
+import Deposit_By_Manager from '../manager/Deposit_By_Manager'
 
 const RightSideBar = ({ user, tabs, managerTab, agenttab, Tabs }) => {
     return (
@@ -16,11 +18,13 @@ const RightSideBar = ({ user, tabs, managerTab, agenttab, Tabs }) => {
                     <div onClick={Tabs?.Tabs3} className={`bg-[#454547] ${tabs === "Agent" ? 'bg-gray-500' : ''} cursor-pointer hover:scale-95 border border-[#8C8C8C] transition-all px-5 py-2 rounded-lg`}>Agent</div>
                 </div>
             </div>}
-            {tabs === "TL" ? <Tltable /> : null}
+            {tabs === "TL" ? <Tltable /> : tabs==="TL"&&managerTab==="Deposit_By_Manager"?<Deposit_By_Manager/>:null}
             {tabs === "Manager" && managerTab === "Balance_Sheet" ? <Balance_Sheet /> : null}
             {tabs === "Manager" && managerTab === "Coin_Sheet" ? <Coin_Sheet /> : null}
             {tabs === "Manager" && managerTab === "Account_Records" ? <Account_Records /> : null}
+            {tabs === "Manager" && managerTab === "Deposit_By_Manager" ? <Deposit_By_Manager /> : null}
             {tabs === "Agent" && agenttab === "Fresh_Message" ? <Fresh_Messages /> : null}
+            {tabs === "Agent" && agenttab === "Deposit_By_Agent" ? <Deposit_By_Agent /> : null}
             {tabs === "Agent" && agenttab === "Free_To_Play" ? <Free_To_Play tabclicked={"freetoplay"} /> : null}
             {tabs === "Agent" && agenttab === "Free_Deposit_Entry" ? <Free_To_Play tabclicked={"firstdeposit"} /> : null}
         </div>

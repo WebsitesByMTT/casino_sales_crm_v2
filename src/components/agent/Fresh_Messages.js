@@ -9,11 +9,8 @@ import { EditData, ModalType, UpdateTable } from '../../app/redux/ReduxSlice'
 import Delete_Modal from '../delete/Delete_Modal'
 import { GetFreshMessage } from '../../app/apiconfig/Apis'
 const Fresh_Messages = () => {
-
-    const dispatch=useDispatch()
-    const state = useSelector((state) => state.globlestate.TableState) //Geting Updated State From Redux
-
-    //Get UserDetails 
+    const dispatch = useDispatch()
+    const state = useSelector((state) => state.globlestate.TableState)
     const [userdetail, setUserDetail] = useState({})
     async function getUser() {
         const userDetails = await getUserDetails();
@@ -22,12 +19,8 @@ const Fresh_Messages = () => {
     useEffect(() => {
         getUser()
     }, [])
-    //Get UserDetails 
-
-    //Get Agent Fresh Message Api
     const [data, setData] = useState([])
-    const [load, setLoad] = useState(false) //ApiLoading State
-
+    const [load, setLoad] = useState(false)
     const handelGetFreshMessage = async () => {
         try {
             setLoad(true)
@@ -44,18 +37,14 @@ const Fresh_Messages = () => {
     useEffect(() => {
         handelGetFreshMessage()
     }, [state])
-
-    //Delete Fresh Message
-    const [deletedata,setDeleteData]=useState()
-    const closedeletemodal=(state)=>{
-       setDeleteData(state)
+    const [deletedata, setDeleteData] = useState()
+    const closedeletemodal = (state) => {
+        setDeleteData(state)
     }
-
-    const handelEdit=(data)=>{
+    const handelEdit = (data) => {
         dispatch(EditData(data))
         dispatch(ModalType('freshmessage'))
     }
-
     return (
         <>
             <div className='text-white pt-10 w-[85%] mx-auto'>
@@ -87,8 +76,8 @@ const Fresh_Messages = () => {
                                         <td className='py-5  font-normal'>{item?.remarks}</td>
                                         <td className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
-                                                <FaEdit size={20} onClick={()=>handelEdit(item)} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
-                                                {userdetail?.designation === "Agent" ? null : <MdDelete onClick={()=>setDeleteData(item?.agentName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
+                                                <FaEdit size={20} onClick={() => handelEdit(item)} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                                {userdetail?.designation === "Agent" ? null : <MdDelete onClick={() => setDeleteData(item?.agentName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
                                             </div>
                                         </td>
                                     </tr>
@@ -99,7 +88,7 @@ const Fresh_Messages = () => {
                 </div >
             </div>
             <Loader show={load} />
-            {deletedata&&<Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteFreshMessage+deletedata}/>}
+            {deletedata && <Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteFreshMessage + deletedata} />}
         </>
     )
 }

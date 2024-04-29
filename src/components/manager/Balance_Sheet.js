@@ -9,13 +9,11 @@ import Delete_Modal from '../delete/Delete_Modal';
 import { GetBalanceSheet } from '../../app/apiconfig/Apis';
 
 const Balance_Sheet = () => {
-
-    const dispatch=useDispatch() //Use Dispatch
-    const state = useSelector((state) => state?.globlestate.TableState) //Geting Updated State From Redux
-    //Get Balance Sheet Api 
+    const dispatch=useDispatch()
+    const state = useSelector((state) => state?.globlestate.TableState)
     const [data, setData] = useState([])
-    const [load, setLoad] = useState(false) //Api Loading State
-
+    const [load, setLoad] = useState(false)
+    const [deletedata,setDeleteData]=useState()
     const handelGetBalanceSheet = async () => {
         try {
             setLoad(true)
@@ -35,14 +33,6 @@ const Balance_Sheet = () => {
         handelGetBalanceSheet()
     }, [state])
 
-    //Balance Sheet Data For Edit
-    const [edit,setEdit]=useState()
-    const closeBalanceSheet=(state)=>{
-        setEdit(state)
-    }
-
-    //Delete Data
-    const [deletedata,setDeleteData]=useState()
     const closedeletemodal=(state)=>{
         setDeleteData(state)
     }
@@ -76,7 +66,7 @@ const Balance_Sheet = () => {
                                         <th className='py-5  font-normal'>{item?.designation}</th>
                                         <th className='py-5  font-normal'>{item?.salary}</th>
                                         <th className='py-5  font-normal'>{item?.incentive}</th>
-                                        <th className='py-5  font-normal'>{item?.totalSalary}</th>
+                                        <th className='py-5  font-normal'>{item?.salary+item?.incentive}</th>
                                         <th className='py-5  font-normal'>{item?.review}</th>
                                         <th className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>

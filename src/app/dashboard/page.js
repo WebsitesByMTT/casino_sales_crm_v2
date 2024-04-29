@@ -38,7 +38,7 @@ const page = () => {
       if (response.status === true) {
         deletToken()
         toast('Logout Successful', { type: 'success' })
-        Router.push('/')
+        Router.push('/login')
       }
       setLoad(false)
     } catch (error) {
@@ -50,9 +50,11 @@ const page = () => {
     managerTab1:() => setManagerTab('Balance_Sheet'),
     managerTab2:() => setManagerTab('Coin_Sheet'),
     managerTab3:() => setManagerTab('Account_Records'),
+    managerTab4:() => setManagerTab('Deposit_By_Manager'),
     AgentTab1:() => setAgenttab('Fresh_Message'),
     AgentTab2:() => setAgenttab('Free_To_Play'),
     AgentTab3:() => setAgenttab('Free_Deposit_Entry'),
+    AgentTab4:() => setAgenttab('Deposit_By_Agent'),
     Tabs1:() => setTabs("TL"),
     Tabs2:() => setTabs("Manager"),
     Tabs3:() => setTabs("Agent"),
