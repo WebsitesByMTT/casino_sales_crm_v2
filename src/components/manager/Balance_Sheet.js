@@ -3,9 +3,8 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { API_PATH } from '../../app/apiconfig/Apipath';
 import Loader from '../../app/utility/Loader';
-import Balance_Sheet_Modal from './Balance_Sheet_Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { UpdateTable } from '../../app/redux/ReduxSlice';
+import { EditData, ModalType, UpdateTable } from '../../app/redux/ReduxSlice';
 import Delete_Modal from '../delete/Delete_Modal';
 import { GetBalanceSheet } from '../../app/apiconfig/Apis';
 
@@ -47,6 +46,10 @@ const Balance_Sheet = () => {
     const closedeletemodal=(state)=>{
         setDeleteData(state)
     }
+    const handelEdit=(data)=>{
+        dispatch(EditData(data))
+        dispatch(ModalType('balancesheet'))
+    }
 
     return (
         <>
@@ -77,7 +80,7 @@ const Balance_Sheet = () => {
                                         <th className='py-5  font-normal'>{item?.review}</th>
                                         <th className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
-                                                <FaEdit onClick={()=>setEdit(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                                <FaEdit onClick={()=>handelEdit(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
                                                 <MdDelete onClick={()=>setDeleteData(item?.employeeName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />
                                             </div>
                                         </th>
@@ -89,7 +92,6 @@ const Balance_Sheet = () => {
                 </div >
             </div >
             <Loader show={load} />
-            {edit&&<Balance_Sheet_Modal closeBalanceSheet={closeBalanceSheet} editdata={edit}/>}
             {deletedata&&<Delete_Modal deletedata={API_PATH.apiDeleteBalanceSheet+deletedata} closedeletemodal={closedeletemodal}/>}
         </>
     )

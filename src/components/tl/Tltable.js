@@ -5,16 +5,20 @@ import { API_PATH } from '../../app/apiconfig/Apipath'
 import Loader from '../../app/utility/Loader'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
-import { UpdateTable } from '../../app/redux/ReduxSlice'
+import { EditData, ModalType, UpdateTable } from '../../app/redux/ReduxSlice'
 import { getUserDetails } from '../../app/utility/session/Cookies'
-import TlEntryModal from './TlEntryModal'
+import TlEntryModal from '../modal/EntryModal'
 import Delete_Modal from '../delete/Delete_Modal'
-import { GetTlData } from '../../app/apiconfig/Apis'
+import { EditAccount, GetTlData } from '../../app/apiconfig/Apis'
 
 
 const Tltable = () => {
-
     const [userdetail, setUserDetail] = useState({})
+    const state = useSelector((state) => state.globlestate.TableState)
+    const [data, setData] = useState([])
+    const [load, setLoad] = useState(false)
+    const dispatch = useDispatch()
+
     async function getUser() {
         const userDetails = await getUserDetails();
         setUserDetail(userDetails)
@@ -22,14 +26,6 @@ const Tltable = () => {
     useEffect(() => {
         getUser()
     }, [])
-    //Get UserDetails 
-
-    const dispatch = useDispatch() //Dispatch From Redux
-
-    const state = useSelector((state) => state.globlestate.TableState) //Geting Updated State From Redux
-    const [data, setData] = useState([]) //TL Table Data State
-    const [load, setLoad] = useState(false) //Api Pre Loader State
-    //TL Get Table Data Api is Here
     const handelGetTlData = async () => {
         try {
             setLoad(true)
@@ -51,21 +47,14 @@ const Tltable = () => {
         handelGetTlData()
     }, [state])
 
-
-    //Tl Table Edit Id Dispatch
-    const [edittldata,setEditTlData]=useState()
-    const handelTlTableEdit=(data)=>{
-        setEditTlData(data)
-    }
-
-    const closeedittl=(state)=>{
-        setEditTlData(state)
-    }
-
-    //Delete Tl Table Data
-    const [deletedata,setDeleteData]=useState()
-    const closedeletemodal=(state)=>{
+    const [deletedata, setDeleteData] = useState()
+    const closedeletemodal = (state) => {
         setDeleteData(state)
+    }
+
+    const handelEdit=(data)=>{
+        dispatch(EditData(data))
+        dispatch(ModalType('tl'))
     }
     return (
         <>
@@ -98,8 +87,8 @@ const Tltable = () => {
                                         <td className='py-3  font-normal'>{item?.remarks}</td>
                                         <td className='py-3 font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
-                                                <FaEdit onClick={()=>handelTlTableEdit(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
-                                                {userdetail?.designation==="TL"?null:<MdDelete onClick={()=>setDeleteData(item?.customerName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
+                                                <FaEdit onClick={()=>handelEdit(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                                {userdetail?.designation === "TL" ? null : <MdDelete onClick={() => setDeleteData(item?.customerName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
                                             </div>
                                         </td>
                                     </tr>
@@ -110,8 +99,7 @@ const Tltable = () => {
                 </div >
             </div>
             <Loader show={load} />
-            {edittldata&&<TlEntryModal closetlpopup={closeedittl} tlEditdata={edittldata}/>}
-            {deletedata&&<Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteTl+deletedata}/>}
+            {deletedata && <Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteTl + deletedata} />}
         </>
     )
 }

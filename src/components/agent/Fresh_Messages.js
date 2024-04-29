@@ -5,8 +5,7 @@ import { getUserDetails } from '../../app/utility/session/Cookies'
 import { API_PATH } from '../../app/apiconfig/Apipath'
 import Loader from '../../app/utility/Loader'
 import { useDispatch, useSelector } from 'react-redux'
-import Fresh_Messages_Modal from './Fresh_Messages_Modal'
-import { UpdateTable } from '../../app/redux/ReduxSlice'
+import { EditData, ModalType, UpdateTable } from '../../app/redux/ReduxSlice'
 import Delete_Modal from '../delete/Delete_Modal'
 import { GetFreshMessage } from '../../app/apiconfig/Apis'
 const Fresh_Messages = () => {
@@ -46,16 +45,15 @@ const Fresh_Messages = () => {
         handelGetFreshMessage()
     }, [state])
 
-    //Edit Fresh Message Data
-    const [editfreshmessage,setEditFreshMessage]=useState()
-    const close_Fresh_Message=(state)=>{
-        setEditFreshMessage(state)
-    }
-
     //Delete Fresh Message
     const [deletedata,setDeleteData]=useState()
     const closedeletemodal=(state)=>{
        setDeleteData(state)
+    }
+
+    const handelEdit=(data)=>{
+        dispatch(EditData(data))
+        dispatch(ModalType('freshmessage'))
     }
 
     return (
@@ -89,7 +87,7 @@ const Fresh_Messages = () => {
                                         <td className='py-5  font-normal'>{item?.remarks}</td>
                                         <td className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
-                                                <FaEdit size={20} onClick={()=>setEditFreshMessage(item)} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                                <FaEdit size={20} onClick={()=>handelEdit(item)} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
                                                 {userdetail?.designation === "Agent" ? null : <MdDelete onClick={()=>setDeleteData(item?.agentName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
                                             </div>
                                         </td>
@@ -101,7 +99,6 @@ const Fresh_Messages = () => {
                 </div >
             </div>
             <Loader show={load} />
-            {editfreshmessage&&<Fresh_Messages_Modal editfreshmessage={editfreshmessage} close_Fresh_Message={close_Fresh_Message}/>}
             {deletedata&&<Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteFreshMessage+deletedata}/>}
         </>
     )

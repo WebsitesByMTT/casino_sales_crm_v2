@@ -5,8 +5,7 @@ import { getUserDetails } from '../../app/utility/session/Cookies'
 import { API_PATH } from '../../app/apiconfig/Apipath'
 import Loader from '../../app/utility/Loader'
 import { useDispatch, useSelector } from 'react-redux'
-import { UpdateTable } from '../../app/redux/ReduxSlice'
-import Free_To_Play_Modal from './Free_To_Play_Modal'
+import { EditData, ModalType, UpdateTable } from '../../app/redux/ReduxSlice'
 import Delete_Modal from '../delete/Delete_Modal'
 import { GetAgent } from '../../app/apiconfig/Apis'
 
@@ -46,16 +45,15 @@ const Free_To_Play = ({ tabclicked }) => {
         handelGetFreePlayData()
     }, [state])
 
-    //Edit Agent
-    const [editagent,setEditAgent]=useState()
-    const closeThisModal=(state)=>{
-        setEditAgent(state)
-    }
-
     //Delete Agent 
     const [deletedata,setDeleteData]=useState()
     const closedeletemodal=(state)=>{
         setDeleteData(state)
+    }
+
+    const handelEdit=(data)=>{
+        dispatch(EditData(data))
+        dispatch(ModalType('agent'))
     }
 
     return (
@@ -89,7 +87,7 @@ const Free_To_Play = ({ tabclicked }) => {
                                         <td className='py-5  font-normal'>{item?.remarks}</td>
                                         {tabclicked==="freetoplay"&&<td className='py-5  font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
-                                                <FaEdit onClick={()=>setEditAgent(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                                <FaEdit onClick={()=>handelEdit(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
                                                 {userdetail?.designation === "Agent" ? null : <MdDelete onClick={()=>setDeleteData(item?.agentName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
                                             </div>
                                         </td>}
@@ -101,7 +99,6 @@ const Free_To_Play = ({ tabclicked }) => {
                 </div >
             </div>
             <Loader show={load} />
-            {editagent&&<Free_To_Play_Modal tabclicked={tabclicked} editagent={editagent} closeThisModal={closeThisModal}/>}
             {deletedata&&<Delete_Modal closedeletemodal={closedeletemodal} deletedata={API_PATH.apiDeleteAgent+tabclicked+'/'+deletedata}/>}
         </>
     )
