@@ -19,28 +19,33 @@ export default function Login() {
     const regex = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/;
     const [load, setLoad] = useState(false)
     const handelLogin = async () => {
-        if (!logindata.email) {
-            toast('Enter Email', { type: 'error' })
-        } else if (regex.test(logindata.email) === false) {
-            toast('Email is Invalid', { type: 'error' })
-        }
-        else if (!logindata.password) {
-            toast('Enter Password', { type: 'error' })
-        } else {
-            try {
-                setLoad(true)
-                const response = await login(logindata)
-                if (response.token) {
-                    setToken(response.token)
-                    toast(response.message, { type: 'success' })
-                    Router.push('/dashboard')
-                } else {
-                    toast(response.error, { type: 'error' })
+        switch (true) {
+            case !logindata.email:
+                toast('Enter Email', { type: 'error' });
+                break;
+            case regex.test(logindata.email) === false:
+                toast('Email is Invalid', { type: 'error' });
+                break;
+            case !logindata.password:
+                toast('Enter Password', { type: 'error' });
+                break;
+            default:
+                try {
+                    setLoad(true)
+                    const response = await login(logindata)
+                    if (response.token) {
+                        setToken(response.token)
+                        toast(response.message, { type: 'success' })
+                        Router.push('/dashboard')
+                    } else {
+                        toast(response.error, { type: 'error' })
+                    }
+                    setLoad(false)
+                } catch (error) {
+                    setLoad(false)
                 }
-                setLoad(false)
-            } catch (error) {
-                setLoad(false)
-            }
+                break;
+
         }
     }
     return (

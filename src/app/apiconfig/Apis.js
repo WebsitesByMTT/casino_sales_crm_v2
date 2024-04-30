@@ -1,14 +1,6 @@
 import axios from 'axios';
-import Cookies from "js-cookie";
-const token = Cookies?.get('token');
 import { API_PATH } from './Apipath';
-
-
-const BearerToken = {
-    headers: {
-        Authorization: `Bearer ${token}`
-    }
-}
+import { BearerToken } from '../utility/session/Cookies';
 
 const GetTlData = async () => {
     try {
@@ -219,6 +211,65 @@ const login=async(logindata)=>{
 }
 
 
+const GetDepositByAgent=async()=>{
+    try {
+        const response = await axios.get(process.env.NEXT_PUBLIC_SERVER_BASE_URL + API_PATH.apiGetDespositAgent,BearerToken) 
+        return response?.data?.FirstDepositList 
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
+const AddDepositAgent=async(data)=>{
+    try {
+        const response=await axios.post(process.env.NEXT_PUBLIC_SERVER_BASE_URL + API_PATH.apiAddDepositAgent,data,BearerToken)
+        return response?.data
+    } catch (error) {
+        console.log(error)
+        throw error        
+    }
+}
+
+const EditDepositbyAgent=async(foredit,data)=>{
+   try {
+    const response=await axios.put(process.env.NEXT_PUBLIC_SERVER_BASE_URL + API_PATH.EditDepositByAgent+foredit,data,BearerToken)
+    return response?.data
+   } catch (error) {
+     console.log(error)
+     throw error
+   }
+}
+
+const AddDeposit=async(data)=>{
+    try {
+     const response=await axios.post(process.env.NEXT_PUBLIC_SERVER_BASE_URL + API_PATH.apiAddDesposit,data,BearerToken)
+     return response?.data
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+ }
+
+ const GetDeposit=async()=>{
+    try {
+     const response=await axios.get(process.env.NEXT_PUBLIC_SERVER_BASE_URL + API_PATH.apiGetDeposit,BearerToken)
+     return response?.data?.FirstDepositList
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+ }
+
+ const handelEditDeposit=async(foredit,data)=>{
+    try {
+     const response=await axios.put(process.env.NEXT_PUBLIC_SERVER_BASE_URL + API_PATH.apiEditDeposit+foredit,data,BearerToken)
+     return response?.data
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+ }
 export 
 {
     GetTlData,
@@ -241,5 +292,11 @@ export
     EditAgent,
     Delete,
     LogOut,
-    login
+    login,
+    GetDepositByAgent,
+    AddDepositAgent,
+    EditDepositbyAgent,
+    AddDeposit,
+    GetDeposit,
+    handelEditDeposit
 };

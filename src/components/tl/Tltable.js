@@ -7,9 +7,8 @@ import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { EditData, ModalType, UpdateTable } from '../../app/redux/ReduxSlice'
 import { getUserDetails } from '../../app/utility/session/Cookies'
-import TlEntryModal from '../modal/EntryModal'
 import Delete_Modal from '../delete/Delete_Modal'
-import { EditAccount, GetTlData } from '../../app/apiconfig/Apis'
+import { GetTlData } from '../../app/apiconfig/Apis'
 
 
 const Tltable = () => {
@@ -18,7 +17,6 @@ const Tltable = () => {
     const [data, setData] = useState([])
     const [load, setLoad] = useState(false)
     const dispatch = useDispatch()
-
     async function getUser() {
         const userDetails = await getUserDetails();
         setUserDetail(userDetails)
@@ -42,17 +40,14 @@ const Tltable = () => {
             setLoad(false)
         }
     }
-
     useEffect(() => {
         handelGetTlData()
     }, [state])
-
     const [deletedata, setDeleteData] = useState()
     const closedeletemodal = (state) => {
         setDeleteData(state)
     }
-
-    const handelEdit=(data)=>{
+    const handelEdit = (data) => {
         dispatch(EditData(data))
         dispatch(ModalType('tl'))
     }
@@ -84,10 +79,10 @@ const Tltable = () => {
                                         <td className='py-3  font-normal'>{item?.gameName}</td>
                                         <td className='py-3  font-normal'>{item?.amount}</td>
                                         <td className='py-3  font-normal'>{item?.accountName}</td>
-                                        <td className='py-3  font-normal'>{item?.remarks}</td>
+                                        <td className='py-3  font-normal'>{item?.remarks.substring(10, 0)}...</td>
                                         <td className='py-3 font-normal'>
                                             <div className='flex items-center justify-center space-x-2'>
-                                                <FaEdit onClick={()=>handelEdit(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
+                                                <FaEdit onClick={() => handelEdit(item)} size={20} className='cursor-pointer hover:scale-125 hover:text-blue-500 transition-all' />
                                                 {userdetail?.designation === "TL" ? null : <MdDelete onClick={() => setDeleteData(item?.customerName)} size={20} className='cursor-pointer hover:scale-125 hover:text-red-500 transition-all' />}
                                             </div>
                                         </td>

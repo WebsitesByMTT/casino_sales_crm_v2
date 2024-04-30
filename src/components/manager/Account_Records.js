@@ -9,12 +9,8 @@ import Delete_Modal from '../delete/Delete_Modal'
 import { GetAccountRecord } from '../../app/apiconfig/Apis'
 
 const Account_Records = () => {
-
-
-    const dispatch = useDispatch() //useDispatch 
-    const state = useSelector((state) => state.globlestate.TableState) //Geting Updated State From Redux
-
-    //Get Account Records Api
+    const dispatch = useDispatch()
+    const state = useSelector((state) => state.globlestate.TableState)
     const [data, setData] = useState([])
     const [load, setLoad] = useState(false)
     const handelAccountRecordsList = async () => {
@@ -35,18 +31,14 @@ const Account_Records = () => {
     useEffect(() => {
         handelAccountRecordsList()
     }, [state])
-
-    //Delete Account Records Data
     const [deletedata,setDeleteData]=useState()
     const closedeletemodal=(state)=>{
         setDeleteData(state)
     }
-
     const handelEdit=(data)=>{
         dispatch(EditData(data))
         dispatch(ModalType('account'))
     }
-
     return (
         <>
             <div className='text-white pt-10 w-[85%] mx-auto'>

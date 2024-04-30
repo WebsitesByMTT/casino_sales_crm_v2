@@ -9,13 +9,11 @@ import Delete_Modal from '../delete/Delete_Modal'
 import { GetCoinSheet } from '../../app/apiconfig/Apis'
 
 const Coin_Sheet = () => {
-
-    const dispatch = useDispatch() //useDispatch 
-    const state = useSelector((state) => state.globlestate.TableState) //Geting Updated State From Redux
-
-    //Get Coin Sheet Data Api
+    const dispatch = useDispatch()
+    const state = useSelector((state) => state.globlestate.TableState)
     const [data, setData] = useState([])
-    const [load, setLoad] = useState(false) //Api Loading State
+    const [load, setLoad] = useState(false)
+    const [deletedata, setDeleteData] = useState()
     const handelGetCoinList = async () => {
         try {
             setLoad(true)
@@ -31,18 +29,13 @@ const Coin_Sheet = () => {
             setLoad(false)
         }
     }
-
     useEffect(() => {
         handelGetCoinList()
     }, [state])
-
-    //Delete Coins Data
-    const [deletedata, setDeleteData] = useState()
     const closedeletemodal = (state) => {
         setDeleteData(state)
     }
-
-    const handelEdit=(data)=>{
+    const handelEdit = (data) => {
         dispatch(EditData(data))
         dispatch(ModalType('coinsheet'))
     }

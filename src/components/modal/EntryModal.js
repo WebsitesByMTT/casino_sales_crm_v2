@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { EditData, ModalType, UpdateTable } from '../../app/redux/ReduxSlice';
 import Button from '../button/Button';
 import InputField from '../input/InputField';
-import { AddAccount, AddAgent, AddBalance, AddFreshMessage, EditAccount, EditAgent, EditBalance, EditFreshMessage, addCoin, addtl, editCoin, edittl } from '../../app/apiconfig/Apis';
+import { AddAccount, AddAgent, AddBalance, AddDeposit, AddDepositAgent, AddFreshMessage, EditAccount, EditAgent, EditBalance, EditDepositbyAgent, EditFreshMessage, addCoin, addtl, editCoin, edittl, handelEditDeposit } from '../../app/apiconfig/Apis';
 
-const EntryModal = ({ modaltype,tabclicked }) => {
+const EntryModal = ({ modaltype, tabclicked }) => {
     const dispatch = useDispatch() //Dispatch From Redux
     const data = useSelector((state) => state.globlestate.EditData)
     const [load, setLoad] = useState(false) //Api Loading State
@@ -110,9 +110,6 @@ const EntryModal = ({ modaltype,tabclicked }) => {
                 break;
             case !balancedata.incentive:
                 toast('Enter Incentive', { type: 'error' });
-                break;
-            case !balancedata.totalSalary:
-                toast('Enter Total Salary', { type: 'error' });
                 break;
             case !balancedata.review:
                 toast('Enter Review', { type: 'error' });
@@ -244,9 +241,6 @@ const EntryModal = ({ modaltype,tabclicked }) => {
             case !coindata.spend:
                 toast("Enter Spend", { type: 'error' });
                 break;
-            case !coindata.remaining:
-                toast("Enter Remaining", { type: 'error' });
-                break;
             default:
                 try {
                     setLoad(true)
@@ -264,7 +258,6 @@ const EntryModal = ({ modaltype,tabclicked }) => {
                     setLoad(false)
                 }
                 break;
-
         }
     }
 
@@ -424,6 +417,106 @@ const EntryModal = ({ modaltype,tabclicked }) => {
     }
     //Agent
 
+    //First Deposit By Agent
+    const [dpagent,setDpagent]=useState({
+        cashIn:data?.cashIn,
+        cashOut:data?.cashOut,
+        net:data?.net
+    })
+    const handelDpbyagentChange=(e)=>{
+        const {name,value}=e.target
+       setDpagent({...dpagent,[name]:value})  
+    }
+
+    const handelAddDepositByAgent=async()=>{
+        try {
+            setLoad(true)
+            const response=await AddDepositAgent(dpagent)
+            if (response.status === true) {
+                toast(response.message, { type: 'success' })
+                closeModal()
+                dispatch(UpdateTable(true))
+            } else {
+                toast(response.error, { type: 'error' })
+                closeModal()
+                
+            }
+            setLoad(false)
+        } catch (error) {
+            console.log(error)
+            setLoad(false)
+        }
+    }
+
+    const EditDepositByAgent = async () => {
+        try {
+            setLoad(true)
+            const response = await EditDepositbyAgent(dpagent?.cashIn,dpagent)
+            if (response.status === true) {
+                toast(response.message, { type: 'success' })
+                closeModal()
+                dispatch(UpdateTable(true))
+            } else {
+                toast("Something went wrong", { type: 'error' })
+                closeModal()
+            }
+            setLoad(false)
+        } catch (error) {
+            setLoad(false)
+        }
+    }
+    //First Deposit By Agent
+
+    //Desposit by Tl Manager
+    const [deposit,setDeposit]=useState({
+        customerName:data?.customerName,
+        cashIn:data?.cashIn,
+        cashOut:data?.cashOut,
+        net:data?.net
+    })
+    const handelDepositChange=(e)=>{
+        const {name,value}=e.target
+        setDeposit({...deposit,[name]:value})
+    }
+
+    const handelAddDeposit=async()=>{
+        try {
+            setLoad(true)
+            const response=await AddDeposit(deposit)
+            if (response.status === true) {
+                toast(response.message, { type: 'success' })
+                closeModal()
+                dispatch(UpdateTable(true))
+            } else {
+                toast(response.error, { type: 'error' })
+                closeModal()
+                
+            }
+            setLoad(false)
+        } catch (error) {
+            console.log(error)
+            setLoad(false)
+        }
+    }
+
+    const EditDeposit = async () => {
+        try {
+            setLoad(true)
+            const response = await handelEditDeposit(deposit?.customerName,deposit)
+            if (response.status === true) {
+                toast(response.message, { type: 'success' })
+                closeModal()
+                dispatch(UpdateTable(true))
+            } else {
+                toast("Something went wrong", { type: 'error' })
+                closeModal()
+            }
+            setLoad(false)
+        } catch (error) {
+            setLoad(false)
+        }
+    }
+    //Desposit by Tl Manager
     const inputData = [
         {
             tl: [
@@ -487,12 +580,6 @@ const EntryModal = ({ modaltype,tabclicked }) => {
                     value: balancedata.incentive
                 },
                 {
-                    labelname: 'Total Salary',
-                    type: 'text',
-                    name: 'totalSalary',
-                    value: balancedata.totalSalary
-                },
-                {
                     labelname: 'Review',
                     type: 'text',
                     name: 'review',
@@ -548,12 +635,6 @@ const EntryModal = ({ modaltype,tabclicked }) => {
                     type: 'text',
                     name: 'spend',
                     value: coindata.spend
-                },
-                {
-                    labelname: 'Remaining',
-                    type: 'text',
-                    name: 'remaining',
-                    value: coindata.remaining
                 }
             ]
         },
@@ -631,8 +712,57 @@ const EntryModal = ({ modaltype,tabclicked }) => {
                 }
             ]
         },
+        {
+            depositByagent: [
+                {
+                    labelname: 'Cash in',
+                    type: 'text',
+                    name:'cashIn',
+                    value:dpagent.cashIn
+                },
+                {
+                    labelname: 'Cash out',
+                    type: 'text',
+                    name: 'cashOut',
+                    value:dpagent.cashOut
+                },
+                {
+                    labelname: 'Net',
+                    type: 'text',
+                    name: 'net',
+                    value:dpagent.net
+                }
+            ]
+        },
+        {
+            deposit: [
+                {
+                    labelname: 'Customer Name',
+                    type: 'text',
+                    name:'customerName',
+                    value:deposit.customerName
+                },
+                {
+                    labelname: 'Cash In',
+                    type: 'text',
+                    name: 'cashIn',
+                    value:deposit.cashIn
+                },
+                {
+                    labelname: 'Cash Out',
+                    type: 'text',
+                    name:'cashOut',
+                    value:deposit.cashOut
+                },
+                {
+                    labelname: 'Net/By Day and also for night',
+                    type: 'text',
+                    name:'net',
+                    value:deposit.net
+                }
+            ]
+        }
     ]
-
     return (
         <>
             <Transition appear show={true} as={Fragment}>
@@ -658,7 +788,7 @@ const EntryModal = ({ modaltype,tabclicked }) => {
                                 enterTo="opacity-100 scale-100"
                                 leave="ease-in duration-200"
                                 leaveFrom="opacity-100 scale-100"
-                                leaveTo="opacity-0 scale-95"
+                                leaveTo="opacity-0 scale-95" 
                             >
                                 <Dialog.Panel className="w-full relative max-w-5xl transform overflow-hidden rounded-xl border-[2px] border-[#00A5FF] bg-[#2A2A2B] p-6 text-left align-middle shadow-xl transition-all">
                                     <div className='grid grid-cols-12 gap-4'>
@@ -733,12 +863,36 @@ const EntryModal = ({ modaltype,tabclicked }) => {
                                                 ))
                                             ))
                                         }
+
+{
+                                            modaltype === 'byagent' &&
+                                            inputData?.map((item) => (
+                                                item?.depositByagent?.map((subitem, subind) => (
+                                                    <div key={subind} className='col-span-3'>
+                                                        <div className='text-white text-[.9rem] pb-1'>{subitem?.labelname}</div>
+                                                        <InputField Type={subitem?.type} Name={subitem?.name} Value={subitem.value} changeEvent={(e) => handelDpbyagentChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'} />
+                                                    </div>
+                                                ))
+                                            ))
+                                        }
+
+                                        {
+                                            modaltype === 'deposit' &&
+                                            inputData?.map((item) => (
+                                                item?.deposit?.map((subitem, subind) => (
+                                                    <div key={subind} className='col-span-3'>
+                                                        <div className='text-white text-[.9rem] pb-1'>{subitem?.labelname}</div>
+                                                        <InputField Type={subitem?.type} Name={subitem?.name} Value={subitem.value} changeEvent={(e) => handelDepositChange(e)} styles={'bg-[#D9D9D9] text-[.9rem] py-1 px-2 rounded-sm outline-none w-full'} />
+                                                    </div>
+                                                ))
+                                            ))
+                                        }
                                     </div>
                                     {/* Add */}
                                     <div className='pt-5 flex justify-center'>
                                         <Button clickevent={
-                                            data ? (modaltype === 'tl' ? EditTlData : modaltype === 'balancesheet' ? EditBalanceSheetData : modaltype === 'account' ? handelaccountedit : modaltype === 'coinsheet' ? EditCoinSheetData : modaltype === 'freshmessage' ? EditFreshmessageData :modaltype === 'agent' ? EditAgentData : null)
-                                                : (modaltype === 'tl' ? handleadddata : modaltype === 'balancesheet' ? handelAddBalanceSheet : modaltype === 'account' ? handeladdaccountrecord : modaltype === 'coinsheet' ? handelAddCoinSheet : modaltype === 'freshmessage' ? handelAddFreshMessage : modaltype === 'agent' ? handelAddagent: null)}
+                                            data ? (modaltype === 'tl' ? EditTlData : modaltype === 'balancesheet' ? EditBalanceSheetData : modaltype === 'account' ? handelaccountedit : modaltype === 'coinsheet' ? EditCoinSheetData : modaltype === 'freshmessage' ? EditFreshmessageData : modaltype === 'agent' ? EditAgentData :modaltype === 'byagent' ? EditDepositByAgent :modaltype === 'deposit' ? EditDeposit : null)
+                                                : (modaltype === 'tl' ? handleadddata : modaltype === 'balancesheet' ? handelAddBalanceSheet : modaltype === 'account' ? handeladdaccountrecord : modaltype === 'coinsheet' ? handelAddCoinSheet : modaltype === 'freshmessage' ? handelAddFreshMessage : modaltype === 'agent' ? handelAddagent :modaltype === 'byagent' ? handelAddDepositByAgent : modaltype === 'deposit' ? handelAddDeposit : null)}
                                             style={'gradient-red text-white px-5 py-1 rounded-md hover:scale-90 transition-all'} text={'Add'} />
                                     </div>
                                     {/* Close Icon */}

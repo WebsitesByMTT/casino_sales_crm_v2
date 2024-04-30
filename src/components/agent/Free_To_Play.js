@@ -10,12 +10,12 @@ import Delete_Modal from '../delete/Delete_Modal'
 import { GetAgent } from '../../app/apiconfig/Apis'
 
 const Free_To_Play = ({ tabclicked }) => {
-
     const dispatch = useDispatch()
-    const state = useSelector((state) => state.globlestate.TableState) //Geting Updated State From Redux
-
-
+    const state = useSelector((state) => state.globlestate.TableState)
     const [userdetail, setUserDetail] = useState({})
+    const [data, setData] = useState([])
+    const [load, setLoad] = useState(false)
+    const [deletedata,setDeleteData]=useState()
     async function getUser() {
         const userDetails = await getUserDetails();
         setUserDetail(userDetails)
@@ -23,11 +23,6 @@ const Free_To_Play = ({ tabclicked }) => {
     useEffect(() => {
         getUser()
     }, [])
-    //Get UserDetails
-
-    //Get Free To Play Api 
-    const [data, setData] = useState([])
-    const [load, setLoad] = useState(false)
     const handelGetFreePlayData = async () => {
         try {
             setLoad(true)
@@ -44,13 +39,9 @@ const Free_To_Play = ({ tabclicked }) => {
     useEffect(() => {
         handelGetFreePlayData()
     }, [state])
-
-    //Delete Agent 
-    const [deletedata,setDeleteData]=useState()
     const closedeletemodal=(state)=>{
         setDeleteData(state)
     }
-
     const handelEdit=(data)=>{
         dispatch(EditData(data))
         dispatch(ModalType('agent'))
