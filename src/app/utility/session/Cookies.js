@@ -20,10 +20,9 @@ export async function getUserDetails() {
     }
 }
 
-const token =Cookies.get('token')
 export const BearerToken={
     headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${Cookies.get('token')}`
     }
 }
 

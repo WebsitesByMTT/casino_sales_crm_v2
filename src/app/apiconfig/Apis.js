@@ -270,7 +270,6 @@ const AddDeposit=async(data)=>{
       throw error
     }
  }
-
 export 
 {
     GetTlData,
